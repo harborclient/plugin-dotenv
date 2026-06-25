@@ -1,11 +1,7 @@
 import { installReact } from "@harborclient/plugin-api";
-import type {
-  CollectionSettingsTabContext,
-  PluginContext,
-} from "@harborclient/plugin-api";
-import { CollectionDotenvTab } from "./components/CollectionDotenvTab";
+import type { PluginContext } from "@harborclient/plugin-api";
+import { ImportEnvView } from "./components/ImportEnvView";
 import { SettingsPanel } from "./components/SettingsPanel";
-import { LinkSyncManager, setLinkSyncManager } from "./link/LinkSyncManager";
 
 /**
  * Activates the Dotenv Sync plugin and registers UI contributions.
@@ -15,9 +11,6 @@ import { LinkSyncManager, setLinkSyncManager } from "./link/LinkSyncManager";
 export function activate(hc: PluginContext): void {
   installReact(hc.react);
 
-  const linkSync = new LinkSyncManager(hc);
-  setLinkSyncManager(linkSync);
-
   /**
    * Settings panel host that closes over the plugin context.
    */
@@ -26,14 +19,10 @@ export function activate(hc: PluginContext): void {
   }
 
   /**
-   * Collection settings tab host that closes over plugin and collection context.
+   * Full-area import view host that closes over the plugin context.
    */
-  function CollectionDotenvTabHost({
-    context,
-  }: {
-    context: CollectionSettingsTabContext;
-  }) {
-    return <CollectionDotenvTab hc={hc} context={context} />;
+  function ImportEnvViewHost() {
+    return <ImportEnvView hc={hc} />;
   }
 
   hc.subscriptions.push(
@@ -42,26 +31,30 @@ export function activate(hc: PluginContext): void {
       title: "Dotenv Sync",
       Component: SettingsPanelHost,
     }),
-    hc.ui.registerCollectionSettingsTab({
-      id: "dotenv",
-      title: "Dotenv",
-      order: 50,
-      Component: CollectionDotenvTabHost,
+    hc.ui.registerMainView({
+      id: "import",
+      title: "Import .env",
+      Component: ImportEnvViewHost,
     }),
-    {
-      dispose: () => {
-        linkSync.dispose();
-        setLinkSyncManager(null);
-      },
-    }
+    hc.ui.registerMenuItem({
+      menu: "file",
+      command: "import",
+      label: "Import .env",
+      group: "import",
+    }),
+    hc.commands.register("import", () => {
+      void hc.commands.execute(
+        "harborclient:openMainView",
+        hc.pluginId,
+        "import"
+      );
+    })
   );
-
-  void linkSync.start();
 }
 
 /**
  * Clears module state when the plugin deactivates.
  */
 export function deactivate(): void {
-  setLinkSyncManager(null);
+  // No module state to clear.
 }

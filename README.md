@@ -1,4 +1,4 @@
-# Dotenv Sync
+# Dotenv
 
 HarborClient plugin that links a `.env` file to an environment and keeps variables in sync.
 

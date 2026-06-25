@@ -11,6 +11,8 @@
   "permissions": ["ui", "filesystem:pick", "filesystem:read", "storage"],
   "contributes": {
     "settingsSections": [{ "id": "defaults", "title": "Dotenv Sync" }],
-    "collectionSettingsTabs": [{ "id": "dotenv", "title": "Dotenv" }]
+    "commands": [{ "id": "import", "title": "Import .env" }],
+    "menus": [{ "menu": "file", "command": "import", "group": "import" }],
+    "mainViews": [{ "id": "import", "title": "Import .env" }]
   }
 }

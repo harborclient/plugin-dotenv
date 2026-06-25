@@ -154,7 +154,7 @@ var require_main = __commonJS({
     var fs = (init_fs(), __toCommonJS(fs_exports));
     var path = (init_path(), __toCommonJS(path_exports));
     var os = (init_os(), __toCommonJS(os_exports));
-    var crypto2 = (init_crypto(), __toCommonJS(crypto_exports));
+    var crypto = (init_crypto(), __toCommonJS(crypto_exports));
     var packageJson = require_package();
     var version = packageJson.version;
     var LINE = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/mg;
@@ -373,7 +373,7 @@ var require_main = __commonJS({
       const authTag = ciphertext.subarray(-16);
       ciphertext = ciphertext.subarray(12, -16);
       try {
-        const aesgcm = crypto2.createDecipheriv("aes-256-gcm", key, nonce);
+        const aesgcm = crypto.createDecipheriv("aes-256-gcm", key, nonce);
         aesgcm.setAuthTag(authTag);
         return `${aesgcm.update(ciphertext)}${aesgcm.final()}`;
       } catch (error) {
@@ -480,22 +480,9 @@ function useMemo(factory, deps) {
 var DEFAULT_SETTINGS = {
   keyPrefixFilter: "",
   keyPrefixStrip: "",
-  keyTransform: "none",
-  pollIntervalMs: 3e3,
-  keepInSyncDefault: true
+  keyTransform: "none"
 };
 var SETTINGS_STORAGE_KEY = "settings";
-var LINKS_STORAGE_KEY = "links";
-function collectionPathStorageKey(collectionId) {
-  return `collection:${collectionId}`;
-}
-
-// src/sync/contentHash.ts
-async function hashContent(content) {
-  const buffer = new TextEncoder().encode(content);
-  const digest = await crypto.subtle.digest("SHA-256", buffer);
-  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
-}
 
 // src/sync/parseDotenv.ts
 var import_dotenv = __toESM(require_main(), 1);
@@ -546,334 +533,7 @@ async function processDotenvContent(content, settings) {
   const parsed = parseDotenvContent(content);
   const transformed = transformDotenvEntries(parsed, settings);
   const variables = toPluginVariables(transformed);
-  const hash = await hashContent(content);
-  return { variables, hash };
-}
-
-// src/link/LinkSyncManager.ts
-var RESYNC_DEBOUNCE_MS = 300;
-var LinkSyncManager = class {
-  #hc;
-  #listeners = /* @__PURE__ */ new Set();
-  #errors = /* @__PURE__ */ new Map();
-  #pathWatchers = /* @__PURE__ */ new Map();
-  #debounceTimers = /* @__PURE__ */ new Map();
-  #links = [];
-  #settings = DEFAULT_SETTINGS;
-  #started = false;
-  /**
-   * @param hc - Renderer plugin context from the HarborClient host.
-   */
-  constructor(hc) {
-    this.#hc = hc;
-  }
-  /**
-   * Loads persisted settings and links, then starts active watchers.
-   */
-  async start() {
-    if (this.#started) {
-      return;
-    }
-    this.#started = true;
-    this.#settings = await this.#hc.storage.get(
-      SETTINGS_STORAGE_KEY
-    ) ?? {
-      ...DEFAULT_SETTINGS
-    };
-    this.#links = await this.#hc.storage.get(LINKS_STORAGE_KEY) ?? [];
-    await this.#refreshWatchers();
-  }
-  /**
-   * Returns all persisted dotenv links.
-   */
-  getLinks() {
-    return [...this.#links];
-  }
-  /**
-   * Returns the link for one collection, if any.
-   *
-   * @param collectionId - Collection database id.
-   */
-  getLinkForCollection(collectionId) {
-    return this.#links.find((link) => link.collectionId === collectionId);
-  }
-  /**
-   * Returns the latest sync error for one collection link.
-   *
-   * @param collectionId - Collection database id.
-   */
-  getLinkError(collectionId) {
-    return this.#errors.get(collectionId) ?? null;
-  }
-  /**
-   * Subscribes to link or error changes for UI refresh.
-   *
-   * @param listener - Called when link state changes.
-   */
-  subscribe(listener) {
-    this.#listeners.add(listener);
-    return {
-      dispose: () => {
-        this.#listeners.delete(listener);
-      }
-    };
-  }
-  /**
-   * Loads current global settings from plugin storage.
-   */
-  async getSettings() {
-    return await this.#hc.storage.get(SETTINGS_STORAGE_KEY) ?? {
-      ...DEFAULT_SETTINGS
-    };
-  }
-  /**
-   * Persists updated global settings and refreshes active watchers.
-   *
-   * @param settings - Updated global settings.
-   */
-  async saveSettings(settings) {
-    this.#settings = settings;
-    await this.#hc.storage.set(SETTINGS_STORAGE_KEY, settings);
-    await this.#refreshWatchers();
-    this.#notify();
-  }
-  /**
-   * Syncs one collection `.env` file into its linked or new environment.
-   *
-   * @param collectionId - Collection database id.
-   * @param dotenvPath - Absolute `.env` file path.
-   * @param options - Sync behavior overrides.
-   */
-  async syncCollection(collectionId, dotenvPath, options = {}) {
-    const content = await this.#hc.fs.readFile(dotenvPath);
-    const settings = await this.getSettings();
-    const { variables, hash } = await processDotenvContent(content, settings);
-    if (variables.length === 0) {
-      throw new Error("No variables matched the current Dotenv Sync filters.");
-    }
-    const existing = this.getLinkForCollection(collectionId);
-    if (options.createNew || !existing) {
-      const environmentName = options.environmentName?.trim();
-      if (!environmentName) {
-        throw new Error("Environment name is required.");
-      }
-      const created = await this.#hc.host.createEnvironmentWithVariables(
-        environmentName,
-        variables
-      );
-      const link = {
-        collectionId,
-        dotenvPath,
-        environmentId: created.id,
-        environmentName: created.name,
-        lastSyncedHash: hash,
-        lastSyncedAt: (/* @__PURE__ */ new Date()).toISOString(),
-        keepInSync: settings.keepInSyncDefault
-      };
-      this.#upsertLink(link);
-      this.#errors.delete(collectionId);
-      await this.#persistLinks();
-      await this.#refreshWatchers();
-      this.#notify();
-      return link;
-    }
-    if (!options.force && existing.lastSyncedHash === hash) {
-      return existing;
-    }
-    await this.#hc.host.updateEnvironmentVariables(
-      existing.environmentId,
-      variables
-    );
-    const updated = {
-      ...existing,
-      dotenvPath,
-      lastSyncedHash: hash,
-      lastSyncedAt: (/* @__PURE__ */ new Date()).toISOString()
-    };
-    this.#upsertLink(updated);
-    this.#errors.delete(collectionId);
-    await this.#persistLinks();
-    await this.#refreshWatchers();
-    this.#notify();
-    return updated;
-  }
-  /**
-   * Updates the keep-in-sync flag for one collection link.
-   *
-   * @param collectionId - Collection database id.
-   * @param keepInSync - Whether automatic syncing should stay enabled.
-   */
-  async setKeepInSync(collectionId, keepInSync) {
-    const link = this.getLinkForCollection(collectionId);
-    if (!link) {
-      return;
-    }
-    this.#upsertLink({ ...link, keepInSync });
-    await this.#persistLinks();
-    await this.#refreshWatchers();
-    this.#notify();
-  }
-  /**
-   * Removes one collection link and stops watching its `.env` file.
-   *
-   * @param collectionId - Collection database id.
-   */
-  async unlink(collectionId) {
-    this.#links = this.#links.filter(
-      (link) => link.collectionId !== collectionId
-    );
-    this.#errors.delete(collectionId);
-    await this.#persistLinks();
-    await this.#refreshWatchers();
-    this.#notify();
-  }
-  /**
-   * Stops all watchers and clears pending debounce timers.
-   */
-  dispose() {
-    for (const timer of this.#debounceTimers.values()) {
-      clearTimeout(timer);
-    }
-    this.#debounceTimers.clear();
-    for (const record of this.#pathWatchers.values()) {
-      record.disposable?.dispose();
-      if (record.pollId) {
-        clearInterval(record.pollId);
-      }
-    }
-    this.#pathWatchers.clear();
-    this.#listeners.clear();
-    this.#started = false;
-  }
-  /**
-   * Rebuilds filesystem watchers and polling timers for active links.
-   */
-  async #refreshWatchers() {
-    for (const record of this.#pathWatchers.values()) {
-      record.disposable?.dispose();
-      if (record.pollId) {
-        clearInterval(record.pollId);
-      }
-    }
-    this.#pathWatchers.clear();
-    const activePaths = /* @__PURE__ */ new Map();
-    for (const link of this.#links) {
-      if (!link.keepInSync) {
-        continue;
-      }
-      const group = activePaths.get(link.dotenvPath) ?? [];
-      group.push(link);
-      activePaths.set(link.dotenvPath, group);
-    }
-    for (const [dotenvPath, links] of activePaths) {
-      let disposable = null;
-      try {
-        disposable = this.#hc.fs.watchFile(dotenvPath, () => {
-          for (const link of links) {
-            this.#scheduleResync(link.collectionId, link.dotenvPath);
-          }
-        });
-      } catch {
-        disposable = null;
-      }
-      const pollId = disposable === null ? setInterval(() => {
-        for (const link of links) {
-          void this.#resyncLink(link.collectionId, link.dotenvPath).catch(
-            (error) => {
-              this.#setError(
-                link.collectionId,
-                error instanceof Error ? error.message : String(error)
-              );
-            }
-          );
-        }
-      }, Math.max(this.#settings.pollIntervalMs, 1e3)) : null;
-      this.#pathWatchers.set(dotenvPath, { disposable, pollId });
-    }
-  }
-  /**
-   * Debounces automatic re-sync requests for one collection link.
-   *
-   * @param collectionId - Collection database id.
-   * @param dotenvPath - Linked `.env` file path.
-   */
-  #scheduleResync(collectionId, dotenvPath) {
-    const existing = this.#debounceTimers.get(collectionId);
-    if (existing) {
-      clearTimeout(existing);
-    }
-    this.#debounceTimers.set(
-      collectionId,
-      setTimeout(() => {
-        this.#debounceTimers.delete(collectionId);
-        void this.#resyncLink(collectionId, dotenvPath).catch((error) => {
-          this.#setError(
-            collectionId,
-            error instanceof Error ? error.message : String(error)
-          );
-        });
-      }, RESYNC_DEBOUNCE_MS)
-    );
-  }
-  /**
-   * Re-syncs one linked collection when its `.env` file changes.
-   *
-   * @param collectionId - Collection database id.
-   * @param dotenvPath - Linked `.env` file path.
-   */
-  async #resyncLink(collectionId, dotenvPath) {
-    const link = this.getLinkForCollection(collectionId);
-    if (!link || !link.keepInSync) {
-      return;
-    }
-    await this.syncCollection(collectionId, dotenvPath, { force: false });
-  }
-  /**
-   * Inserts or replaces one link in the in-memory list.
-   *
-   * @param link - Updated link record.
-   */
-  #upsertLink(link) {
-    const index = this.#links.findIndex(
-      (entry) => entry.collectionId === link.collectionId
-    );
-    if (index >= 0) {
-      this.#links[index] = link;
-      return;
-    }
-    this.#links.push(link);
-  }
-  /**
-   * Persists the current link list to plugin storage.
-   */
-  async #persistLinks() {
-    await this.#hc.storage.set(LINKS_STORAGE_KEY, this.#links);
-  }
-  /**
-   * Stores a sync error for one collection and notifies listeners.
-   *
-   * @param collectionId - Collection database id.
-   * @param message - Error message to display in the collection tab.
-   */
-  #setError(collectionId, message) {
-    this.#errors.set(collectionId, message);
-    this.#notify();
-  }
-  /**
-   * Notifies subscribed UI components that link state changed.
-   */
-  #notify() {
-    for (const listener of this.#listeners) {
-      listener();
-    }
-  }
-};
-var activeManager = null;
-function setLinkSyncManager(manager) {
-  activeManager = manager;
-}
-function getLinkSyncManager() {
-  return activeManager;
+  return { variables };
 }
 
 // node_modules/.pnpm/@harborclient+plugin-api@0.4.1_react@19.2.7/node_modules/@harborclient/plugin-api/dist/runtime/jsx-runtime.js
@@ -890,7 +550,7 @@ function build(type, props, key) {
 var jsx = build;
 var jsxs = build;
 
-// src/components/CollectionDotenvTab.tsx
+// src/components/ImportEnvView.tsx
 function suggestEnvironmentName(dotenvPath) {
   const parts = dotenvPath.split(/[/\\]/);
   const fileName = parts[parts.length - 1] ?? "env";
@@ -900,69 +560,44 @@ function suggestEnvironmentName(dotenvPath) {
   }
   return "Local env";
 }
-function formatSyncedAt(value) {
-  if (!value) {
-    return "Never";
-  }
-  return new Date(value).toLocaleString();
-}
-function formatSyncError(error) {
+function formatImportError(error) {
   const message = error instanceof Error ? error.message : String(error);
   if (message.includes("not allowlisted")) {
     return `${message} Re-select the .env file with Browse to restore access.`;
   }
   return message;
 }
-function CollectionDotenvTab({ hc, context }) {
-  const manager = getLinkSyncManager();
+function ImportEnvView({ hc }) {
+  const [settings, setSettings] = useState(DEFAULT_SETTINGS);
   const [dotenvPath, setDotenvPath] = useState("");
-  const [link, setLink] = useState();
+  const [variables, setVariables] = useState([]);
+  const [environmentName, setEnvironmentName] = useState("");
   const [error, setError] = useState(null);
   const [status, setStatus] = useState(null);
-  const [syncing, setSyncing] = useState(false);
-  const [showNamePrompt, setShowNamePrompt] = useState(false);
-  const [environmentName, setEnvironmentName] = useState("");
-  const [keepInSync, setKeepInSync] = useState(true);
-  const readOnly = context.readOnly;
-  const collectionId = context.collectionId;
+  const [loadingFile, setLoadingFile] = useState(false);
+  const [creating, setCreating] = useState(false);
+  const [createdName, setCreatedName] = useState(null);
   useEffect(() => {
     let cancelled = false;
-    async function refreshState() {
-      const storedPath = (await hc.storage.get(
-        collectionPathStorageKey(collectionId)
-      ))?.dotenvPath ?? "";
-      const currentLink = manager?.getLinkForCollection(collectionId);
-      const linkError = manager?.getLinkError(collectionId) ?? null;
-      if (cancelled) {
-        return;
+    void (async () => {
+      const stored = await hc.storage.get(SETTINGS_STORAGE_KEY) ?? DEFAULT_SETTINGS;
+      if (!cancelled) {
+        setSettings(stored);
       }
-      setDotenvPath(storedPath);
-      setLink(currentLink);
-      setKeepInSync(currentLink?.keepInSync ?? true);
-      setError(linkError);
-    }
-    void refreshState();
-    const subscription = manager?.subscribe(() => {
-      void refreshState();
-    });
+    })();
     return () => {
       cancelled = true;
-      subscription?.dispose();
     };
-  }, [hc, collectionId, manager]);
+  }, [hc]);
   const suggestedName = useMemo(
     () => suggestEnvironmentName(dotenvPath),
     [dotenvPath]
   );
-  async function persistPath(path) {
-    await hc.storage.set(collectionPathStorageKey(collectionId), {
-      dotenvPath: path
-    });
-    setDotenvPath(path);
-  }
   async function handleBrowse() {
     setError(null);
     setStatus(null);
+    setCreatedName(null);
+    setLoadingFile(true);
     try {
       const selected = await hc.fs.pickFile({
         title: "Select .env file",
@@ -971,210 +606,137 @@ function CollectionDotenvTab({ hc, context }) {
       if (selected.length === 0) {
         return;
       }
-      await persistPath(selected[0]);
-      setEnvironmentName(suggestEnvironmentName(selected[0]));
+      const path = selected[0];
+      const content = await hc.fs.readFile(path);
+      const { variables: parsed } = await processDotenvContent(
+        content,
+        settings
+      );
+      if (parsed.length === 0) {
+        throw new Error(
+          "No variables matched the current Dotenv Sync filters."
+        );
+      }
+      setDotenvPath(path);
+      setVariables(parsed);
+      setEnvironmentName(suggestEnvironmentName(path));
     } catch (browseError) {
-      setError(formatSyncError(browseError));
-    }
-  }
-  async function runSync(createNew) {
-    if (!dotenvPath.trim()) {
-      setError("Select a .env file before syncing.");
-      return;
-    }
-    if (!manager) {
-      setError("Dotenv Sync is not ready yet.");
-      return;
-    }
-    setSyncing(true);
-    setError(null);
-    setStatus(null);
-    try {
-      const nextLink = await manager.syncCollection(collectionId, dotenvPath, {
-        createNew,
-        environmentName: createNew ? environmentName : void 0,
-        force: !createNew
-      });
-      setLink(nextLink);
-      setKeepInSync(nextLink.keepInSync);
-      setShowNamePrompt(false);
-      setStatus(
-        createNew ? `Created environment "${nextLink.environmentName}".` : `Synced ${nextLink.environmentName}.`
-      );
-      hc.ui.showToast(
-        createNew ? "Environment created from .env" : "Environment synced from .env"
-      );
-    } catch (syncError) {
-      setError(formatSyncError(syncError));
+      setDotenvPath("");
+      setVariables([]);
+      setError(formatImportError(browseError));
     } finally {
-      setSyncing(false);
+      setLoadingFile(false);
     }
   }
-  function handleSyncNow() {
-    if (link) {
-      void runSync(false);
-      return;
-    }
-    setEnvironmentName((current) => current || suggestedName);
-    setShowNamePrompt(true);
-  }
-  async function handleCreateSubmit(event) {
+  async function handleCreate(event) {
     event.preventDefault();
-    await runSync(true);
-  }
-  async function handleKeepInSyncChange(enabled) {
-    setKeepInSync(enabled);
-    if (!manager || !link) {
+    const name = environmentName.trim();
+    if (!name) {
+      setError("Environment name is required.");
       return;
     }
-    try {
-      await manager.setKeepInSync(collectionId, enabled);
-      setStatus(enabled ? "Automatic sync enabled." : "Automatic sync paused.");
-    } catch (toggleError) {
-      setError(
-        toggleError instanceof Error ? toggleError.message : String(toggleError)
-      );
-      setKeepInSync(!enabled);
-    }
-  }
-  async function handleUnlink() {
-    if (!manager) {
+    if (variables.length === 0) {
+      setError("Select a .env file before creating an environment.");
       return;
     }
+    setCreating(true);
     setError(null);
     setStatus(null);
+    setCreatedName(null);
     try {
-      await manager.unlink(collectionId);
-      setLink(void 0);
-      setShowNamePrompt(false);
-      setStatus("Link removed. The environment was kept.");
-    } catch (unlinkError) {
-      setError(
-        unlinkError instanceof Error ? unlinkError.message : String(unlinkError)
+      const created = await hc.host.createEnvironmentWithVariables(
+        name,
+        variables
       );
+      setCreatedName(created.name);
+      setStatus(
+        `Created environment "${created.name}" with ${variables.length} variables.`
+      );
+      hc.ui.showToast(`Environment "${created.name}" created from .env`);
+    } catch (createError) {
+      setError(formatImportError(createError));
+    } finally {
+      setCreating(false);
     }
   }
-  return /* @__PURE__ */ jsxs("div", { className: "max-w-2xl space-y-4", children: [
-    /* @__PURE__ */ jsx("p", { className: "text-[14px] text-muted", children: "Link a `.env` file to a HarborClient environment. Changes to the file can be synced automatically while the plugin is enabled." }),
-    /* @__PURE__ */ jsxs("label", { className: "block space-y-1", children: [
-      /* @__PURE__ */ jsx("span", { className: "text-[14px]", children: "`.env` file" }),
-      /* @__PURE__ */ jsxs("div", { className: "flex gap-2", children: [
-        /* @__PURE__ */ jsx(
-          "input",
-          {
-            className: "min-w-0 flex-1 rounded border border-control bg-control px-3 py-2 text-[14px]",
-            value: dotenvPath,
-            readOnly: true,
-            "aria-label": ".env file path"
-          }
-        ),
-        /* @__PURE__ */ jsx(
-          "button",
-          {
-            type: "button",
-            className: "rounded border border-control px-3 py-2 text-[14px] disabled:opacity-60",
-            onClick: () => void handleBrowse(),
-            disabled: readOnly,
-            children: "Browse"
-          }
-        )
-      ] })
-    ] }),
-    link ? /* @__PURE__ */ jsxs("div", { className: "space-y-2 rounded border border-control p-3", children: [
-      /* @__PURE__ */ jsxs("p", { className: "text-[14px]", children: [
-        "Linked environment: ",
-        /* @__PURE__ */ jsx("strong", { children: link.environmentName })
+  return /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-2xl space-y-6", children: [
+    /* @__PURE__ */ jsx("p", { className: "text-[14px] text-muted", children: "Import variables from a `.env` file into a new HarborClient environment. Adjust key filters in Settings \u2192 Dotenv Sync before importing." }),
+    /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4", children: [
+      /* @__PURE__ */ jsxs("label", { className: "block space-y-1", children: [
+        /* @__PURE__ */ jsx("span", { className: "text-[14px]", id: "dotenv-path-label", children: "`.env` file" }),
+        /* @__PURE__ */ jsxs("div", { className: "flex gap-2", children: [
+          /* @__PURE__ */ jsx(
+            "input",
+            {
+              id: "dotenv-path",
+              className: "min-w-0 flex-1 rounded border border-control bg-control px-3 py-2 text-[14px]",
+              value: dotenvPath,
+              readOnly: true,
+              "aria-labelledby": "dotenv-path-label"
+            }
+          ),
+          /* @__PURE__ */ jsx(
+            "button",
+            {
+              type: "button",
+              className: "rounded border border-control px-3 py-2 text-[14px] disabled:opacity-60",
+              onClick: () => void handleBrowse(),
+              disabled: loadingFile || creating,
+              children: loadingFile ? "Loading\u2026" : "Browse"
+            }
+          )
+        ] })
       ] }),
-      /* @__PURE__ */ jsxs("p", { className: "text-[14px] text-muted", role: "status", children: [
-        "Last synced: ",
-        formatSyncedAt(link.lastSyncedAt)
-      ] }),
-      /* @__PURE__ */ jsxs("label", { className: "flex items-center gap-2 text-[14px]", children: [
-        /* @__PURE__ */ jsx(
-          "input",
-          {
-            type: "checkbox",
-            checked: keepInSync,
-            disabled: readOnly,
-            onChange: (event) => void handleKeepInSyncChange(event.target.checked)
-          }
-        ),
-        "Keep in sync"
-      ] })
-    ] }) : null,
-    showNamePrompt ? /* @__PURE__ */ jsxs(
-      "form",
-      {
-        className: "space-y-3 rounded border border-control p-3",
-        onSubmit: (event) => void handleCreateSubmit(event),
-        children: [
-          /* @__PURE__ */ jsxs("label", { className: "block space-y-1", children: [
-            /* @__PURE__ */ jsx("span", { className: "text-[14px]", children: "Environment name" }),
-            /* @__PURE__ */ jsx(
-              "input",
-              {
-                className: "w-full rounded border border-control bg-control px-3 py-2 text-[14px]",
-                value: environmentName,
-                onChange: (event) => setEnvironmentName(event.target.value),
-                required: true,
-                "aria-required": "true"
-              }
-            )
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "flex gap-2", children: [
+      variables.length > 0 ? /* @__PURE__ */ jsxs("p", { className: "text-[14px] text-muted", role: "status", children: [
+        variables.length,
+        " variable",
+        variables.length === 1 ? "" : "s",
+        " ready to import: ",
+        variables.map((row) => row.key).join(", ")
+      ] }) : null,
+      /* @__PURE__ */ jsx(
+        "form",
+        {
+          className: "space-y-6",
+          onSubmit: (event) => void handleCreate(event),
+          children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4", children: [
+            /* @__PURE__ */ jsxs("label", { className: "block space-y-1", children: [
+              /* @__PURE__ */ jsx("span", { className: "text-[14px]", id: "environment-name-label", children: "Environment name" }),
+              /* @__PURE__ */ jsx(
+                "input",
+                {
+                  id: "environment-name",
+                  className: "w-full rounded border border-control bg-control px-3 py-2 text-[14px]",
+                  value: environmentName,
+                  onChange: (event) => setEnvironmentName(event.target.value),
+                  placeholder: suggestedName || "Local env",
+                  required: true,
+                  "aria-required": "true",
+                  "aria-labelledby": "environment-name-label",
+                  disabled: creating || Boolean(createdName)
+                }
+              )
+            ] }),
             /* @__PURE__ */ jsx(
               "button",
               {
                 type: "submit",
                 className: "rounded bg-accent px-4 py-2 text-[14px] text-on-accent disabled:opacity-60",
-                disabled: syncing || readOnly,
-                children: syncing ? "Creating\u2026" : "Create environment"
-              }
-            ),
-            /* @__PURE__ */ jsx(
-              "button",
-              {
-                type: "button",
-                className: "rounded border border-control px-4 py-2 text-[14px]",
-                onClick: () => setShowNamePrompt(false),
-                disabled: syncing,
-                children: "Cancel"
+                disabled: creating || loadingFile || variables.length === 0 || Boolean(createdName),
+                children: creating ? "Creating\u2026" : "Create environment"
               }
             )
           ] })
-        ]
-      }
-    ) : null,
-    /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap gap-2", children: [
-      /* @__PURE__ */ jsx(
-        "button",
-        {
-          type: "button",
-          className: "rounded bg-accent px-4 py-2 text-[14px] text-on-accent disabled:opacity-60",
-          onClick: handleSyncNow,
-          disabled: readOnly || syncing || !dotenvPath,
-          children: syncing ? "Syncing\u2026" : link ? "Sync now" : "Sync now"
         }
       ),
-      link ? /* @__PURE__ */ jsx(
-        "button",
-        {
-          type: "button",
-          className: "rounded border border-control px-4 py-2 text-[14px] disabled:opacity-60",
-          onClick: () => void handleUnlink(),
-          disabled: readOnly || syncing,
-          children: "Unlink"
-        }
-      ) : null
-    ] }),
-    status ? /* @__PURE__ */ jsx("p", { className: "text-[14px] text-muted", role: "status", "aria-live": "polite", children: status }) : null,
-    error ? /* @__PURE__ */ jsx("p", { className: "text-[14px] text-danger", role: "alert", children: error }) : null
+      status ? /* @__PURE__ */ jsx("p", { className: "text-[14px] text-muted", role: "status", "aria-live": "polite", children: status }) : null,
+      error ? /* @__PURE__ */ jsx("p", { className: "text-[14px] text-danger", role: "alert", children: error }) : null
+    ] })
   ] });
 }
 
 // src/components/SettingsPanel.tsx
 function SettingsPanel({ hc }) {
-  const manager = getLinkSyncManager();
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
@@ -1197,16 +759,7 @@ function SettingsPanel({ hc }) {
     setError(null);
     setSaved(false);
     try {
-      const nextSettings = {
-        ...settings,
-        pollIntervalMs: Math.max(settings.pollIntervalMs, 1e3)
-      };
-      if (manager) {
-        await manager.saveSettings(nextSettings);
-      } else {
-        await hc.storage.set(SETTINGS_STORAGE_KEY, nextSettings);
-      }
-      setSettings(nextSettings);
+      await hc.storage.set(SETTINGS_STORAGE_KEY, settings);
       setSaved(true);
     } catch (submitError) {
       setError(
@@ -1222,98 +775,69 @@ function SettingsPanel({ hc }) {
       className: "max-w-xl space-y-4",
       onSubmit: (event) => void handleSubmit(event),
       children: [
-        /* @__PURE__ */ jsx("p", { className: "text-[14px] text-muted", children: "Configure how `.env` keys are mapped into HarborClient environments." }),
-        /* @__PURE__ */ jsxs("label", { className: "block space-y-1", children: [
-          /* @__PURE__ */ jsx("span", { className: "text-[14px]", children: "Key prefix filter" }),
+        /* @__PURE__ */ jsx("p", { className: "text-[14px] text-muted", children: "Configure how `.env` keys are mapped into HarborClient environments when you use File \u2192 Import .env." }),
+        /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4", children: [
+          /* @__PURE__ */ jsxs("label", { className: "block space-y-1", children: [
+            /* @__PURE__ */ jsx("span", { className: "text-[14px]", children: "Key prefix filter" }),
+            /* @__PURE__ */ jsx(
+              "input",
+              {
+                className: "w-full rounded border border-control bg-control px-3 py-2 text-[14px]",
+                value: settings.keyPrefixFilter,
+                onChange: (event) => setSettings((current) => ({
+                  ...current,
+                  keyPrefixFilter: event.target.value
+                })),
+                placeholder: "Only sync keys starting with this prefix"
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxs("label", { className: "block space-y-1", children: [
+            /* @__PURE__ */ jsx("span", { className: "text-[14px]", children: "Key prefix strip" }),
+            /* @__PURE__ */ jsx(
+              "input",
+              {
+                className: "w-full rounded border border-control bg-control px-3 py-2 text-[14px]",
+                value: settings.keyPrefixStrip,
+                onChange: (event) => setSettings((current) => ({
+                  ...current,
+                  keyPrefixStrip: event.target.value
+                })),
+                placeholder: "Remove this prefix before mapping keys"
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxs("label", { className: "block space-y-1", children: [
+            /* @__PURE__ */ jsx("span", { className: "text-[14px]", children: "Key transform" }),
+            /* @__PURE__ */ jsxs(
+              "select",
+              {
+                className: "w-full rounded border border-control bg-control px-3 py-2 text-[14px]",
+                value: settings.keyTransform,
+                onChange: (event) => setSettings((current) => ({
+                  ...current,
+                  keyTransform: event.target.value
+                })),
+                children: [
+                  /* @__PURE__ */ jsx("option", { value: "none", children: "None" }),
+                  /* @__PURE__ */ jsx("option", { value: "lowercase", children: "Lowercase" }),
+                  /* @__PURE__ */ jsx("option", { value: "snake_case", children: "snake_case" })
+                ]
+              }
+            )
+          ] }),
+          error ? /* @__PURE__ */ jsx("p", { className: "text-[14px] text-danger", role: "alert", children: error }) : null,
+          saved ? /* @__PURE__ */ jsx("p", { className: "text-[14px] text-muted", role: "status", children: "Settings saved." }) : null,
           /* @__PURE__ */ jsx(
-            "input",
+            "button",
             {
-              className: "w-full rounded border border-control bg-control px-3 py-2 text-[14px]",
-              value: settings.keyPrefixFilter,
-              onChange: (event) => setSettings((current) => ({
-                ...current,
-                keyPrefixFilter: event.target.value
-              })),
-              placeholder: "Only sync keys starting with this prefix"
+              type: "submit",
+              className: "rounded bg-accent px-4 py-2 text-[14px] text-on-accent disabled:opacity-60",
+              disabled: saving,
+              children: saving ? "Saving\u2026" : "Save settings"
             }
           )
-        ] }),
-        /* @__PURE__ */ jsxs("label", { className: "block space-y-1", children: [
-          /* @__PURE__ */ jsx("span", { className: "text-[14px]", children: "Key prefix strip" }),
-          /* @__PURE__ */ jsx(
-            "input",
-            {
-              className: "w-full rounded border border-control bg-control px-3 py-2 text-[14px]",
-              value: settings.keyPrefixStrip,
-              onChange: (event) => setSettings((current) => ({
-                ...current,
-                keyPrefixStrip: event.target.value
-              })),
-              placeholder: "Remove this prefix before mapping keys"
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsxs("label", { className: "block space-y-1", children: [
-          /* @__PURE__ */ jsx("span", { className: "text-[14px]", children: "Key transform" }),
-          /* @__PURE__ */ jsxs(
-            "select",
-            {
-              className: "w-full rounded border border-control bg-control px-3 py-2 text-[14px]",
-              value: settings.keyTransform,
-              onChange: (event) => setSettings((current) => ({
-                ...current,
-                keyTransform: event.target.value
-              })),
-              children: [
-                /* @__PURE__ */ jsx("option", { value: "none", children: "None" }),
-                /* @__PURE__ */ jsx("option", { value: "lowercase", children: "Lowercase" }),
-                /* @__PURE__ */ jsx("option", { value: "snake_case", children: "snake_case" })
-              ]
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsxs("label", { className: "block space-y-1", children: [
-          /* @__PURE__ */ jsx("span", { className: "text-[14px]", children: "Poll interval (ms)" }),
-          /* @__PURE__ */ jsx(
-            "input",
-            {
-              className: "w-full rounded border border-control bg-control px-3 py-2 text-[14px]",
-              type: "number",
-              min: 1e3,
-              step: 500,
-              value: settings.pollIntervalMs,
-              onChange: (event) => setSettings((current) => ({
-                ...current,
-                pollIntervalMs: Number(event.target.value) || DEFAULT_SETTINGS.pollIntervalMs
-              }))
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsxs("label", { className: "flex items-center gap-2 text-[14px]", children: [
-          /* @__PURE__ */ jsx(
-            "input",
-            {
-              type: "checkbox",
-              checked: settings.keepInSyncDefault,
-              onChange: (event) => setSettings((current) => ({
-                ...current,
-                keepInSyncDefault: event.target.checked
-              }))
-            }
-          ),
-          "Keep new links in sync automatically"
-        ] }),
-        error ? /* @__PURE__ */ jsx("p", { className: "text-[14px] text-danger", role: "alert", children: error }) : null,
-        saved ? /* @__PURE__ */ jsx("p", { className: "text-[14px] text-muted", role: "status", children: "Settings saved." }) : null,
-        /* @__PURE__ */ jsx(
-          "button",
-          {
-            type: "submit",
-            className: "rounded bg-accent px-4 py-2 text-[14px] text-on-accent disabled:opacity-60",
-            disabled: saving,
-            children: saving ? "Saving\u2026" : "Save settings"
-          }
-        )
+        ] })
       ]
     }
   );
@@ -1322,15 +846,11 @@ function SettingsPanel({ hc }) {
 // src/renderer.tsx
 function activate(hc) {
   installReact(hc.react);
-  const linkSync = new LinkSyncManager(hc);
-  setLinkSyncManager(linkSync);
   function SettingsPanelHost() {
     return /* @__PURE__ */ jsx(SettingsPanel, { hc });
   }
-  function CollectionDotenvTabHost({
-    context
-  }) {
-    return /* @__PURE__ */ jsx(CollectionDotenvTab, { hc, context });
+  function ImportEnvViewHost() {
+    return /* @__PURE__ */ jsx(ImportEnvView, { hc });
   }
   hc.subscriptions.push(
     hc.ui.registerSettingsSection({
@@ -1338,23 +858,27 @@ function activate(hc) {
       title: "Dotenv Sync",
       Component: SettingsPanelHost
     }),
-    hc.ui.registerCollectionSettingsTab({
-      id: "dotenv",
-      title: "Dotenv",
-      order: 50,
-      Component: CollectionDotenvTabHost
+    hc.ui.registerMainView({
+      id: "import",
+      title: "Import .env",
+      Component: ImportEnvViewHost
     }),
-    {
-      dispose: () => {
-        linkSync.dispose();
-        setLinkSyncManager(null);
-      }
-    }
+    hc.ui.registerMenuItem({
+      menu: "file",
+      command: "import",
+      label: "Import .env",
+      group: "import"
+    }),
+    hc.commands.register("import", () => {
+      void hc.commands.execute(
+        "harborclient:openMainView",
+        hc.pluginId,
+        "import"
+      );
+    })
   );
-  void linkSync.start();
 }
 function deactivate() {
-  setLinkSyncManager(null);
 }
 export {
   activate,
