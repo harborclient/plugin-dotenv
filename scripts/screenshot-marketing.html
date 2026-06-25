@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 873px;
+      height: 390px;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #0a0e17;
+    }
+
+    .canvas {
+      position: relative;
+      width: 873px;
+      height: 390px;
+      display: flex;
+      background:
+        radial-gradient(ellipse 80% 90% at 95% 20%, rgba(52, 211, 153, 0.2) 0%, transparent 55%),
+        radial-gradient(ellipse 70% 80% at 5% 85%, rgba(99, 102, 241, 0.16) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 40% at 40% 30%, rgba(56, 189, 248, 0.08) 0%, transparent 60%),
+        linear-gradient(135deg, #0c1220 0%, #111827 50%, #0a0f1a 100%);
+    }
+
+    .grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: radial-gradient(ellipse 90% 80% at 55% 50%, black 15%, transparent 78%);
+      pointer-events: none;
+    }
+
+    .left {
+      position: relative;
+      z-index: 2;
+      width: 310px;
+      flex-shrink: 0;
+      padding: 28px 0 28px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .plugin-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(52, 211, 153, 0.12);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      color: #6ee7b7;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .plugin-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 8px #34d399;
+    }
+
+    .pill {
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #94a3b8;
+      font-size: 9px;
+      font-weight: 500;
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 1.12;
+      color: #f8fafc;
+      letter-spacing: -0.02em;
+    }
+
+    h1 span {
+      background: linear-gradient(90deg, #34d399, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #64748b;
+      line-height: 1.45;
+      max-width: 280px;
+    }
+
+    .right {
+      position: relative;
+      flex: 1;
+      padding: 24px 32px 24px 16px;
+      display: flex;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .mockup-glow {
+      position: absolute;
+      inset: 16px 24px 16px 8px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(52, 211, 153, 0.22), rgba(56, 189, 248, 0.12), rgba(129, 140, 248, 0.1));
+      filter: blur(20px);
+      opacity: 0.9;
+    }
+
+    .mockup {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: #1a1f2e;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mockup-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      background: #141824;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .traffic {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+
+    .traffic.r {
+      background: #ff5f57;
+    }
+
+    .traffic.y {
+      background: #febc2e;
+    }
+
+    .traffic.g {
+      background: #28c840;
+    }
+
+    .toolbar-title {
+      margin-left: 8px;
+      font-size: 10px;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .sync-badge {
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(52, 211, 153, 0.12);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      color: #6ee7b7;
+      font-size: 9px;
+      font-weight: 600;
+    }
+
+    .sync-badge .pulse {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 6px #34d399;
+    }
+
+    .mockup-body {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 0;
+    }
+
+    .panel {
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 0;
+    }
+
+    .panel+.panel {
+      border-left: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(0, 0, 0, 0.12);
+    }
+
+    .panel-label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #64748b;
+    }
+
+    .env-file {
+      flex: 1;
+      padding: 10px;
+      border-radius: 7px;
+      background: #0f131c;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 9.5px;
+      line-height: 1.6;
+      color: #94a3b8;
+    }
+
+    .env-file .key {
+      color: #38bdf8;
+    }
+
+    .env-file .val {
+      color: #34d399;
+    }
+
+    .env-file .comment {
+      color: #475569;
+    }
+
+    .import-form {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field-label {
+      font-size: 10px;
+      color: #94a3b8;
+      margin-bottom: 3px;
+    }
+
+    .field-row {
+      display: flex;
+      gap: 6px;
+    }
+
+    .field-input {
+      flex: 1;
+      padding: 5px 8px;
+      border-radius: 5px;
+      background: #0f131c;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 9px;
+      color: #cbd5e1;
+      font-family: ui-monospace, monospace;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .browse-btn {
+      padding: 5px 10px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #e2e8f0;
+      font-size: 9px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .var-count {
+      font-size: 9px;
+      color: #64748b;
+      line-height: 1.4;
+    }
+
+    .var-count strong {
+      color: #34d399;
+    }
+
+    .create-btn {
+      margin-top: auto;
+      padding: 7px 12px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #10b981, #0ea5e9);
+      color: white;
+      font-size: 10px;
+      font-weight: 600;
+      text-align: center;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+    }
+
+    .arrow-col {
+      position: absolute;
+      left: 50%;
+      top: 58%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #1a1f2e;
+      border: 1px solid rgba(52, 211, 153, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #34d399;
+      font-size: 14px;
+      box-shadow: 0 0 16px rgba(52, 211, 153, 0.25);
+    }
+
+    .toast {
+      position: absolute;
+      top: 18px;
+      right: 38px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 11px;
+      border-radius: 8px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(52, 211, 153, 0.4);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 20px rgba(52, 211, 153, 0.12);
+      z-index: 4;
+    }
+
+    .toast-icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgba(52, 211, 153, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #34d399;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .toast-text {
+      font-size: 10px;
+      color: #e2e8f0;
+      font-weight: 500;
+    }
+
+    .env-icon {
+      position: absolute;
+      bottom: 24px;
+      left: 28px;
+      font-family: ui-monospace, monospace;
+      font-size: 32px;
+      font-weight: 700;
+      color: rgba(52, 211, 153, 0.08);
+      z-index: 0;
+      user-select: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="canvas">
+    <div class="grid"></div>
+    <div class="env-icon">.env</div>
+
+    <div class="left">
+      <div class="badge-row">
+        <div class="plugin-badge"><span class="dot"></span> HarborClient Plugin</div>
+        <span class="pill">Import</span>
+        <span class="pill">Live sync</span>
+        <span class="pill">Key filters</span>
+      </div>
+      <h1><span>.env</span> → environments, synced</h1>
+      <p class="subtitle">Link a .env file to HarborClient. Import variables in one click and keep them mirrored as your
+        file changes.</p>
+    </div>
+
+    <div class="right">
+      <div class="mockup-glow"></div>
+      <div class="mockup">
+        <div class="mockup-toolbar">
+          <span class="traffic r"></span>
+          <span class="traffic y"></span>
+          <span class="traffic g"></span>
+          <span class="toolbar-title">HarborClient — Import .env</span>
+          <span class="sync-badge"><span class="pulse"></span> Keep in sync</span>
+        </div>
+        <div class="mockup-body">
+          <div class="panel">
+            <div class="panel-label">Source file</div>
+            <div class="env-file">
+              <span class="comment"># .env.local</span><br>
+              <span class="key">API_BASE_URL</span>=<span class="val">https://api.example.com</span><br>
+              <span class="key">API_KEY</span>=<span class="val">sk_live_••••••••</span><br>
+              <span class="key">DATABASE_URL</span>=<span class="val">postgres://localhost/app</span><br>
+              <span class="key">DEBUG</span>=<span class="val">true</span>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-label">Import to HarborClient</div>
+            <div class="import-form">
+              <div>
+                <div class="field-label">`.env` file</div>
+                <div class="field-row">
+                  <div class="field-input">/project/.env.local</div>
+                  <div class="browse-btn">Browse</div>
+                </div>
+              </div>
+              <div>
+                <div class="field-label">Environment name</div>
+                <div class="field-input">local</div>
+              </div>
+              <p class="var-count"><strong>4 variables</strong> ready: API_BASE_URL, API_KEY, DATABASE_URL, DEBUG</p>
+              <div class="create-btn">Create environment</div>
+            </div>
+          </div>
+        </div>
+        <div class="arrow-col">→</div>
+      </div>
+    </div>
+
+    <div class="toast">
+      <div class="toast-icon">✓</div>
+      <span class="toast-text">Environment "local" created from .env</span>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -34,7 +34,7 @@
     },
     {
       "path": "screenshot.png",
-      "sha256": "7ddbe45fdc6c3a3e26934793e8ed0c4faec6623960ca872bcaa137c3efc39d8e"
+      "sha256": "018a09f58a6606a4e8c985230c9dd619321a22ee23039a8332a06546fc5b8a8b"
     },
     {
       "path": "scripts/plugin-sign.ts",
@@ -43,6 +43,10 @@
     {
       "path": "scripts/plugin-verify.ts",
       "sha256": "7f1f2407a2a8fac287d88e18f48db22d926c7de656c06143dd7baf3f30898620"
+    },
+    {
+      "path": "scripts/screenshot-marketing.html",
+      "sha256": "15cea9de59a924101594211d6088683738c17a86508cd3208da09ffde155c6a0"
     },
     {
       "path": "src/components/ImportEnvView.tsx",
@@ -93,5 +97,5 @@
       "sha256": "2d4ac4b984c9b3891a9eabb63b9b5c9e6164b291453e8071055a56d68d67bfda"
     }
   ],
-  "signature": "1n/zC2qmT8mRG7ni9EpcAfdrXyqWho+7sxKnY/mxkZzNgu1NPvyGwVFfFVFeKdgdb6szyhnl3TbtqzywIz/bDQ=="
+  "signature": "xoXIpI55dllrXqtN20EW4Ui0n/pJvQNDhGnxy1ynHATEF0wxaKStZ6SbgzjsvK82u1PyVyzzZ/4kdd8Jw0i0CQ=="
 }
