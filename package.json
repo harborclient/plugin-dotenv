@@ -1,0 +1,22 @@
+{
+  "name": "@harborclient/plugin-dotenv",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node esbuild.config.mjs",
+    "dev": "node esbuild.config.mjs --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "pack": "pnpm build && zip -r dotenv.hcp manifest.json README.md dist"
+  },
+  "dependencies": {
+    "dotenv": "^16.6.1"
+  },
+  "devDependencies": {
+    "@harborclient/plugin-api": "^0.4.1",
+    "@types/react": "^19.1.8",
+    "esbuild": "^0.25.0",
+    "typescript": "^5.8.3",
+    "vitest": "^4.1.9"
+  }
+}
