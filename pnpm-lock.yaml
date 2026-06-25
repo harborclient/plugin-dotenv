@@ -13,8 +13,11 @@ importers:
         version: 16.6.1
     devDependencies:
       '@harborclient/plugin-api':
-        specifier: ^0.4.1
-        version: 0.4.1(react@19.2.7)
+        specifier: ^0.4.2
+        version: 0.4.2(react@19.2.7)
+      '@types/node':
+        specifier: ^26.0.1
+        version: 26.0.1
       '@types/react':
         specifier: ^19.1.8
         version: 19.2.17
@@ -26,7 +29,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^4.1.9
-        version: 4.1.9(vite@8.1.0(esbuild@0.25.12))
+        version: 4.1.9(@types/node@26.0.1)(vite@8.1.0(@types/node@26.0.1)(esbuild@0.25.12))
 
 packages:
 
@@ -195,8 +198,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@harborclient/plugin-api@0.4.1':
-    resolution: {integrity: sha512-gD9nFiA8I/QMNsdeOac22wtiK1pJgEjx6QiNjO0gWOmDDt4pPGajT+A8pUumjYP+CPaip4QmMhw64tfBJ1CyZw==}
+  '@harborclient/plugin-api@0.4.2':
+    resolution: {integrity: sha512-QgLK5NmPF83EQtMF+dRqOJipScOpzxGWwgW1TIaR3BqpEvaTFW3048NdYacbyc8z6A2cQQ4U6tb1wEhtDqDNHw==}
     hasBin: true
     peerDependencies:
       react: '>=18'
@@ -319,6 +322,9 @@ packages:
 
   '@types/estree@1.0.9':
     resolution: {integrity: sha512-GhdPgy1el4/ImP05X05Uw4cw2/M93BCUmnEvWZNStlCzEKME4Fkk+YpoA5OiHNQmoS7Cafb8Xa3Pya8m1Qrzeg==}
+
+  '@types/node@26.0.1':
+    resolution: {integrity: sha512-fc3KiUoBt6kie0N9bIW3E47vZsuaMf0PM2AaUpLCLT0s/LvX1nxAim6Fc049cNxODPpGm6qRAuUOB86SkRuPQw==}
 
   '@types/react@19.2.17':
     resolution: {integrity: sha512-MXfmqaVPEVgkBT/aY0aGCkRWWtByiYQXo3xdQ8r5RzuFrPiRn8Gar2tQdXSUQ2GKV3bkXckek89V8wQBY2Q/Aw==}
@@ -544,6 +550,9 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
+  undici-types@8.3.0:
+    resolution: {integrity: sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ==}
+
   vite@8.1.0:
     resolution: {integrity: sha512-BuJcQK/56NQTWDGn4ABea3q4SSBdNPWwNZKTkkUpcMPnLoquSYH8llRtSUIgoL1KSCpHt5eghLShn50mH36y7Q==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -729,7 +738,7 @@ snapshots:
   '@esbuild/win32-x64@0.25.12':
     optional: true
 
-  '@harborclient/plugin-api@0.4.1(react@19.2.7)':
+  '@harborclient/plugin-api@0.4.2(react@19.2.7)':
     dependencies:
       react: 19.2.7
 
@@ -811,6 +820,10 @@ snapshots:
 
   '@types/estree@1.0.9': {}
 
+  '@types/node@26.0.1':
+    dependencies:
+      undici-types: 8.3.0
+
   '@types/react@19.2.17':
     dependencies:
       csstype: 3.2.3
@@ -824,13 +837,13 @@ snapshots:
       chai: 6.2.2
       tinyrainbow: 3.1.0
 
-  '@vitest/mocker@4.1.9(vite@8.1.0(esbuild@0.25.12))':
+  '@vitest/mocker@4.1.9(vite@8.1.0(@types/node@26.0.1)(esbuild@0.25.12))':
     dependencies:
       '@vitest/spy': 4.1.9
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 8.1.0(esbuild@0.25.12)
+      vite: 8.1.0(@types/node@26.0.1)(esbuild@0.25.12)
 
   '@vitest/pretty-format@4.1.9':
     dependencies:
@@ -1028,7 +1041,9 @@ snapshots:
 
   typescript@5.9.3: {}
 
-  vite@8.1.0(esbuild@0.25.12):
+  undici-types@8.3.0: {}
+
+  vite@8.1.0(@types/node@26.0.1)(esbuild@0.25.12):
     dependencies:
       lightningcss: 1.32.0
       picomatch: 4.0.4
@@ -1036,13 +1051,14 @@ snapshots:
       rolldown: 1.1.3
       tinyglobby: 0.2.17
     optionalDependencies:
+      '@types/node': 26.0.1
       esbuild: 0.25.12
       fsevents: 2.3.3
 
-  vitest@4.1.9(vite@8.1.0(esbuild@0.25.12)):
+  vitest@4.1.9(@types/node@26.0.1)(vite@8.1.0(@types/node@26.0.1)(esbuild@0.25.12)):
     dependencies:
       '@vitest/expect': 4.1.9
-      '@vitest/mocker': 4.1.9(vite@8.1.0(esbuild@0.25.12))
+      '@vitest/mocker': 4.1.9(vite@8.1.0(@types/node@26.0.1)(esbuild@0.25.12))
       '@vitest/pretty-format': 4.1.9
       '@vitest/runner': 4.1.9
       '@vitest/snapshot': 4.1.9
@@ -1059,8 +1075,10 @@ snapshots:
       tinyexec: 1.2.4
       tinyglobby: 0.2.17
       tinyrainbow: 3.1.0
-      vite: 8.1.0(esbuild@0.25.12)
+      vite: 8.1.0(@types/node@26.0.1)(esbuild@0.25.12)
       why-is-node-running: 2.3.0
+    optionalDependencies:
+      '@types/node': 26.0.1
     transitivePeerDependencies:
       - msw
 

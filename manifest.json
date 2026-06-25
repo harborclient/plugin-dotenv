@@ -1,8 +1,8 @@
 {
   "id": "com.harborclient.plugins.dotenv",
-  "name": "Dotenv Sync",
-  "version": "0.1.0",
-  "company": "HarborClient",
+  "name": "Dotenv",
+  "version": "1.0.1",
+  "author": "HarborClient",
   "description": "README.md",
   "engines": {
     "harborclient": ">=1.8.0"
