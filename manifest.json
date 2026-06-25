@@ -1,7 +1,7 @@
 {
   "id": "com.harborclient.plugins.dotenv",
   "name": "Dotenv",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "HarborClient",
   "description": "README.md",
   "engines": {

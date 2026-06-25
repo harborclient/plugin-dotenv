@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState } from "@harborclient/plugin-api/react";
+import { useEffect, useMemo, useState } from "@harborclient/sdk/react";
 import type {
   PluginContext,
   PluginVariableInput,
-} from "@harborclient/plugin-api";
+} from "@harborclient/sdk";
 import { DEFAULT_SETTINGS, SETTINGS_STORAGE_KEY } from "../storage/defaults";
 import { processDotenvContent } from "../sync/pipeline";
 import type { DotenvSettings } from "../types";

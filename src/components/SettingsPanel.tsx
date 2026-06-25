@@ -1,5 +1,5 @@
-import { useEffect, useState } from "@harborclient/plugin-api/react";
-import type { PluginContext } from "@harborclient/plugin-api";
+import { useEffect, useState } from "@harborclient/sdk/react";
+import type { PluginContext } from "@harborclient/sdk";
 import { DEFAULT_SETTINGS, SETTINGS_STORAGE_KEY } from "../storage/defaults";
 import type { DotenvSettings } from "../types";
 

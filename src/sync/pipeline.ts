@@ -1,4 +1,4 @@
-import type { PluginVariableInput } from "@harborclient/plugin-api";
+import type { PluginVariableInput } from "@harborclient/sdk";
 import type { DotenvSettings } from "../types";
 import { parseDotenvContent } from "./parseDotenv";
 import { toPluginVariables } from "./toPluginVariables";

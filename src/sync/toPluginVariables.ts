@@ -1,4 +1,4 @@
-import type { PluginVariableInput } from "@harborclient/plugin-api";
+import type { PluginVariableInput } from "@harborclient/sdk";
 
 /**
  * Converts transformed `.env` entries into HarborClient variable rows.

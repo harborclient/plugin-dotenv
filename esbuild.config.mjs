@@ -16,7 +16,7 @@ async function buildRenderer(watch = false) {
     format: "esm",
     platform: "browser",
     jsx: "automatic",
-    jsxImportSource: "@harborclient/plugin-api",
+    jsxImportSource: "@harborclient/sdk",
     external: ["react", "react-dom"],
     plugins: [
       {
