@@ -6,7 +6,7 @@ import { toPluginVariables } from "./toPluginVariables";
 describe("parseDotenvContent", () => {
   it("parses standard dotenv lines and ignores comments", () => {
     expect(
-      parseDotenvContent("API_URL=https://example.com\n# comment\nTOKEN=abc")
+      parseDotenvContent("API_URL=https://example.com\n# comment\nTOKEN=abc"),
     ).toEqual({
       API_URL: "https://example.com",
       TOKEN: "abc",
@@ -25,7 +25,7 @@ describe("transformDotenvEntries", () => {
         keyPrefixFilter: "API_",
         keyPrefixStrip: "API_",
         keyTransform: "snake_case",
-      }
+      },
     );
 
     expect(result).toEqual({

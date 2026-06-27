@@ -1,13 +1,11 @@
-import type { PluginVariableInput } from "@harborclient/sdk";
+import type { Variable } from "@harborclient/sdk";
 
 /**
  * Converts transformed `.env` entries into HarborClient variable rows.
  *
  * @param entries - Transformed key/value pairs from a `.env` file.
  */
-export function toPluginVariables(
-  entries: Record<string, string>
-): PluginVariableInput[] {
+export function toPluginVariables(entries: Record<string, string>): Variable[] {
   return Object.entries(entries).map(([key, value]) => ({
     key,
     value,

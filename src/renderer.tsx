@@ -46,9 +46,9 @@ export function activate(hc: PluginContext): void {
       void hc.commands.execute(
         "harborclient:openMainView",
         hc.pluginId,
-        "import"
+        "import",
       );
-    })
+    }),
   );
 }
 

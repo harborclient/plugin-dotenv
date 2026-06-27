@@ -44,7 +44,7 @@ function toSnakeCase(key: string): string {
  */
 export function transformDotenvEntries(
   entries: Record<string, string>,
-  settings: TransformSettings
+  settings: TransformSettings,
 ): Record<string, string> {
   const result: Record<string, string> = {};
 

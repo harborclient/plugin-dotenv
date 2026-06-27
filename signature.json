@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "pluginId": "com.harborclient.plugins.dotenv",
-  "pluginVersion": "1.0.3",
+  "pluginVersion": "1.0.4",
   "algorithm": "Ed25519",
   "files": [
     {
@@ -9,24 +9,36 @@
       "sha256": "88ad380decbd9a1a6659c573833c96932dab32e7e0e88fa3353c98f758cd10b3"
     },
     {
+      "path": ".prettierignore",
+      "sha256": "b02bed94208de748690435af4df22462fce96b1a373e90650b586e265e794fc6"
+    },
+    {
+      "path": ".prettierrc.json",
+      "sha256": "e8f095840550869cfedd3788dce369c7e6f089aaa58cc6a3cf927b8714ab2534"
+    },
+    {
       "path": "dist/renderer.js",
-      "sha256": "034ec723641d5d24b2462af3ae208a22e1e7e712037f48aeba599bc3698397e8"
+      "sha256": "6705719aed1115ee1211921331fa71f26440e521134c67f4c74bc85d6efd9563"
     },
     {
       "path": "esbuild.config.mjs",
-      "sha256": "54da2a3ceb30ce37f080641bf0175cad1f828bcb358e50ebc23bb23b04093ef7"
+      "sha256": "4863cfe2897dc7586330f6b181ce85d2a6615794b841ba9165e434e35f6dae55"
+    },
+    {
+      "path": "eslint.config.js",
+      "sha256": "e26bf39b2bc8c6e5994919f2f8148565c766c222550a043498119f24c0c5d8d8"
     },
     {
       "path": "manifest.json",
-      "sha256": "df278a3e7d8748b1af79301532fb530c0ebe382490f9d97dfef7dbd0388ee085"
+      "sha256": "7ed2bd237a3020befe579f485a98baa6b631919c892f757d32a69183f2b5bb2a"
     },
     {
       "path": "package.json",
-      "sha256": "61b3d7991e6b171388760de935dbc8e85ec250a4c108022822777aaccec0884e"
+      "sha256": "71105295fb7eab0d033338d33a01f7b5d73c63023efd8d245d98e66594b6a2ee"
     },
     {
       "path": "pnpm-lock.yaml",
-      "sha256": "f72a32c57b6af97428a9d899ad1d8787fa70ab939f1db8c47227d98588bdff21"
+      "sha256": "b57810e50aa4776d4ed20f583f9022211e77ea79f9d16f3f05bc03c96397c19c"
     },
     {
       "path": "README.md",
@@ -50,19 +62,19 @@
     },
     {
       "path": "scripts/screenshot-marketing.html",
-      "sha256": "8c2dd31c20de568a8174aa6af8cfd88b8eced8a807a8b4376068a6a7061487c6"
+      "sha256": "6f3f23bbfe697e3c9b862e7f19d879b1dd38c06694a4af227ad055a608b6b7c4"
     },
     {
       "path": "src/components/ImportEnvView.tsx",
-      "sha256": "c5dab636bbaf34fee08e7b5b96cec9646c791bbc1c0be4201ba40952b9be265e"
+      "sha256": "0565cb26e475d62253202fe45265ceb8eaa5eff1dccef9ccc4f69695a30c6372"
     },
     {
       "path": "src/components/SettingsPanel.tsx",
-      "sha256": "d09a26c61721f5fb6761f1349355be1be623102b28f6389e0c32a9a84da301b6"
+      "sha256": "e289f3a5fdf52e09c6dca006c9de6e1807343e8f8c06d7449fb91147dad6a7b7"
     },
     {
       "path": "src/renderer.tsx",
-      "sha256": "97061a88c54336ce92291f0bab7c56b4ad4c657c911743182020b045017104c6"
+      "sha256": "72d1b6d3e4c71432620c1d8c0d108ae8b5b5220d9db53510b53e625ea1e475dd"
     },
     {
       "path": "src/storage/defaults.ts",
@@ -74,19 +86,19 @@
     },
     {
       "path": "src/sync/pipeline.ts",
-      "sha256": "b5064b6240973c5132314c6feb1962ffd31e9e65e9d298e4bf4c3094cfc958c5"
+      "sha256": "76d7ebbbf91b72331b2574d68c56c85703ac7b80e6c2b9960f1c1be6d34b11e4"
     },
     {
       "path": "src/sync/sync.test.ts",
-      "sha256": "763872d10a02b376bc176ddd3628fbea90ffd0a1abed9418df994d43942b2c6e"
+      "sha256": "333164c55c586f0bc3f0bca59d50da15a0f859665fe5d87d8437840a676215d9"
     },
     {
       "path": "src/sync/toPluginVariables.ts",
-      "sha256": "5a76bbce6d17958d900d92dff6221e29221f73667ed866d44a0d40c3a274f939"
+      "sha256": "bce8789e969440eaa596ff8c4838d17a0de39a02da0ae8382f9173bb2656268d"
     },
     {
       "path": "src/sync/transformKeys.ts",
-      "sha256": "5cecf9aec119e3ca94bcf00a269a487bee84a46659a79b3972bca24b7de3dc6a"
+      "sha256": "76e0bb18639a00507abc6dcf36838c836a96a45959eb812507bd0a6d0630ef19"
     },
     {
       "path": "src/types.ts",
@@ -101,5 +113,5 @@
       "sha256": "2d4ac4b984c9b3891a9eabb63b9b5c9e6164b291453e8071055a56d68d67bfda"
     }
   ],
-  "signature": "YzsJzyPNX+z9u9mknuOCApBuXIsXAjCWl5g0GvYRhUJtow989yTb1Ae/e0XT4Qe8nBbCNZ+Nro8pBlpPaE5KDQ=="
+  "signature": "5wUWA33yJK9LjZZO9h3CSyUQi0BgE3UadhG+wE96eh8orke2VqaUWIYxvg4Cg3iDErhuilC+4bIaEq/7bIiTAQ=="
 }

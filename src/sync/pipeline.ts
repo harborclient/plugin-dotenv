@@ -1,4 +1,4 @@
-import type { PluginVariableInput } from "@harborclient/sdk";
+import type { Variable } from "@harborclient/sdk";
 import type { DotenvSettings } from "../types";
 import { parseDotenvContent } from "./parseDotenv";
 import { toPluginVariables } from "./toPluginVariables";
@@ -11,7 +11,7 @@ export interface DotenvPipelineResult {
   /**
    * Variable rows ready for HarborClient environment APIs.
    */
-  variables: PluginVariableInput[];
+  variables: Variable[];
 }
 
 /**
@@ -25,7 +25,7 @@ export async function processDotenvContent(
   settings: Pick<
     DotenvSettings,
     "keyPrefixFilter" | "keyPrefixStrip" | "keyTransform"
-  >
+  >,
 ): Promise<DotenvPipelineResult> {
   const parsed = parseDotenvContent(content);
   const transformed = transformDotenvEntries(parsed, settings);

@@ -1,5 +1,13 @@
 import { useEffect, useState } from "@harborclient/sdk/react";
 import type { PluginContext } from "@harborclient/sdk";
+import {
+  Button,
+  FieldError,
+  FormGroup,
+  Input,
+  Select,
+  StatusMessage,
+} from "@harborclient/sdk/components";
 import { DEFAULT_SETTINGS, SETTINGS_STORAGE_KEY } from "../storage/defaults";
 import type { DotenvSettings } from "../types";
 
@@ -43,7 +51,7 @@ export function SettingsPanel({ hc }: Props) {
    * @param event - Settings form submit event.
    */
   async function handleSubmit(
-    event: React.FormEvent<HTMLFormElement>
+    event: React.FormEvent<HTMLFormElement>,
   ): Promise<void> {
     event.preventDefault();
     setSaving(true);
@@ -54,7 +62,9 @@ export function SettingsPanel({ hc }: Props) {
       setSaved(true);
     } catch (submitError) {
       setError(
-        submitError instanceof Error ? submitError.message : String(submitError)
+        submitError instanceof Error
+          ? submitError.message
+          : String(submitError),
       );
     } finally {
       setSaving(false);
@@ -72,11 +82,9 @@ export function SettingsPanel({ hc }: Props) {
       </p>
 
       <div className="flex flex-col gap-4">
-
-        <label className="block space-y-1">
-          <span className="text-[14px]">Key prefix filter</span>
-          <input
-            className="w-full rounded border border-control bg-control px-3 py-2 text-[14px]"
+        <FormGroup label="Key prefix filter">
+          <Input
+            className="w-full"
             value={settings.keyPrefixFilter}
             onChange={(event) =>
               setSettings((current) => ({
@@ -86,12 +94,11 @@ export function SettingsPanel({ hc }: Props) {
             }
             placeholder="Only sync keys starting with this prefix"
           />
-        </label>
+        </FormGroup>
 
-        <label className="block space-y-1">
-          <span className="text-[14px]">Key prefix strip</span>
-          <input
-            className="w-full rounded border border-control bg-control px-3 py-2 text-[14px]"
+        <FormGroup label="Key prefix strip">
+          <Input
+            className="w-full"
             value={settings.keyPrefixStrip}
             onChange={(event) =>
               setSettings((current) => ({
@@ -101,12 +108,11 @@ export function SettingsPanel({ hc }: Props) {
             }
             placeholder="Remove this prefix before mapping keys"
           />
-        </label>
+        </FormGroup>
 
-        <label className="block space-y-1">
-          <span className="text-[14px]">Key transform</span>
-          <select
-            className="w-full rounded border border-control bg-control px-3 py-2 text-[14px]"
+        <FormGroup label="Key transform">
+          <Select
+            className="w-full"
             value={settings.keyTransform}
             onChange={(event) =>
               setSettings((current) => ({
@@ -119,27 +125,15 @@ export function SettingsPanel({ hc }: Props) {
             <option value="none">None</option>
             <option value="lowercase">Lowercase</option>
             <option value="snake_case">snake_case</option>
-          </select>
-        </label>
+          </Select>
+        </FormGroup>
 
-        {error ? (
-          <p className="text-[14px] text-danger" role="alert">
-            {error}
-          </p>
-        ) : null}
-        {saved ? (
-          <p className="text-[14px] text-muted" role="status">
-            Settings saved.
-          </p>
-        ) : null}
+        {error ? <FieldError roleAlert>{error}</FieldError> : null}
+        {saved ? <StatusMessage>Settings saved.</StatusMessage> : null}
 
-        <button
-          type="submit"
-          className="rounded bg-accent px-4 py-2 text-[14px] text-on-accent disabled:opacity-60"
-          disabled={saving}
-        >
+        <Button type="submit" disabled={saving}>
           {saving ? "Saving…" : "Save settings"}
-        </button>
+        </Button>
       </div>
     </form>
   );
