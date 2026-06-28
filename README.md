@@ -2,6 +2,9 @@
 
 HarborClient plugin that links a `.env` file to an environment and keeps variables in sync.
 
+![Screenshot](screenshot.png)
+
+
 ## Features
 
 - Pick a `.env` file per collection from Collection Settings → Dotenv
