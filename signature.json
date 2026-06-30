@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "pluginId": "com.harborclient.plugins.dotenv",
-  "pluginVersion": "1.0.7",
+  "pluginVersion": "1.0.8",
   "algorithm": "Ed25519",
   "files": [
     {
@@ -18,27 +18,23 @@
     },
     {
       "path": "dist/renderer.js",
-      "sha256": "1af098b816d7a9436acd5d9aab328673187e6c4e6ca16666874a71eb31b8dd9d"
+      "sha256": "f97e41733aa0019005b84bf5119e71e2f2d376532142d3e864d42348d52cac17"
     },
     {
-      "path": "esbuild.config.mjs",
-      "sha256": "4863cfe2897dc7586330f6b181ce85d2a6615794b841ba9165e434e35f6dae55"
-    },
-    {
-      "path": "eslint.config.js",
-      "sha256": "e26bf39b2bc8c6e5994919f2f8148565c766c222550a043498119f24c0c5d8d8"
+      "path": "eslint.config.mjs",
+      "sha256": "d74a66f91fd2bcd4d548f8fbff511fb47e4db06620ac137b29a8867e377c259d"
     },
     {
       "path": "manifest.json",
-      "sha256": "f04513e463807af4be6798e747c1a7eb8be7ee5c21ec2e3c40d8d95ec52507a0"
+      "sha256": "bdd7d86c3c52bedfa63285ca62a92d2055c5a6e765020ee27d33fe1da01e188b"
     },
     {
       "path": "package.json",
-      "sha256": "19a94e95f636e34f35ef571a9803d12344026bc985d8189c47c63305a95b3abd"
+      "sha256": "2ae3ec46261f495fbf6f79e0369088d1f7e248e46f109936f9e9c1f946f4f471"
     },
     {
       "path": "pnpm-lock.yaml",
-      "sha256": "61b97a2bc0f1dbb6c26f7dffcb0aa0f38db2674206965d893d345d3c01224357"
+      "sha256": "523ea7feb9bb6784f5fa8e144a6347391b26c625da52683991ee70f4b69d8beb"
     },
     {
       "path": "README.md",
@@ -47,6 +43,10 @@
     {
       "path": "screenshot.png",
       "sha256": "e51ae5f4cf54da046580199d8822c8e595e0442e07658824cae61d760cb743c5"
+    },
+    {
+      "path": "scripts/build.mjs",
+      "sha256": "f5f1683577aaff08ebe7da21fafdb21a89e119dc3e0e41d502c1f6cabccb5b41"
     },
     {
       "path": "scripts/plugin-sign.ts",
@@ -106,12 +106,12 @@
     },
     {
       "path": "tsconfig.json",
-      "sha256": "dced0ea880bec6222ac9856d3d2ce11b91fd874298f3129c8b5944606dc73668"
+      "sha256": "663c22f2cb634722bc1c1191c4808b53c89d930979d4936cb6d0a539f4476ac9"
     },
     {
       "path": "vitest.config.ts",
       "sha256": "2d4ac4b984c9b3891a9eabb63b9b5c9e6164b291453e8071055a56d68d67bfda"
     }
   ],
-  "signature": "iL/kTsRjLwg/a38Du3jG+Gx8eUYYGbDNqgB5aMMw8FzL+8Flgy0Azsn8suWDyRuoYmjvEn3Vr7wiImCjGGZPBw=="
+  "signature": "4OP4AyBZdEUvgxD08+s2PRLiM/nd8MVtZVrHEi4ABZ+oINiiVv2hYrJS56ahJ/i+/oDSH0BHjPji6B7n3421Dw=="
 }

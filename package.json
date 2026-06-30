@@ -1,10 +1,9 @@
 {
   "name": "@harborclient/plugin-dotenv",
-  "version": "1.0.7",
   "type": "module",
   "scripts": {
-    "build": "node esbuild.config.mjs",
-    "dev": "node esbuild.config.mjs --watch",
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/build.mjs --watch",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -16,22 +15,15 @@
     "plugin:verify": "node --experimental-strip-types scripts/plugin-verify.ts"
   },
   "dependencies": {
-    "@harborclient/sdk": "^0.6.15",
+    "@harborclient/sdk": "^1.0.0",
     "dotenv": "^16.6.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.4",
     "@types/node": "^26.0.1",
     "@types/react": "^19.1.8",
-    "esbuild": "^0.25.0",
     "eslint": "^9.39.4",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^7.1.1",
-    "globals": "^17.7.0",
     "prettier": "^3.9.0",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.62.0",
     "vitest": "^4.1.9"
   }
 }
