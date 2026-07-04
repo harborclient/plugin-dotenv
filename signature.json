@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "pluginId": "com.harborclient.plugins.dotenv",
-  "pluginVersion": "1.0.9",
+  "pluginVersion": "1.0.10",
   "algorithm": "Ed25519",
   "files": [
     {
@@ -18,7 +18,7 @@
     },
     {
       "path": "dist/renderer.js",
-      "sha256": "f97e41733aa0019005b84bf5119e71e2f2d376532142d3e864d42348d52cac17"
+      "sha256": "98202a6c219874b3a8913d83f3dcfba90fa29f353d1d8a5c1aa46e3704555d09"
     },
     {
       "path": "eslint.config.mjs",
@@ -26,15 +26,15 @@
     },
     {
       "path": "manifest.json",
-      "sha256": "a9561cbae3818d2460c5c2e8200f30902cb5a13571ea7cf6242036fca630b2a7"
+      "sha256": "02b2366cb0ad4ef8ce2c13d36fdf8f656c463bb3165a0c56cf61e7f408144120"
     },
     {
       "path": "package.json",
-      "sha256": "2ae3ec46261f495fbf6f79e0369088d1f7e248e46f109936f9e9c1f946f4f471"
+      "sha256": "9e40b1ba2ce23aa02e87bec29b84004c42e6ca574a7beca2400f307d915282c2"
     },
     {
       "path": "pnpm-lock.yaml",
-      "sha256": "523ea7feb9bb6784f5fa8e144a6347391b26c625da52683991ee70f4b69d8beb"
+      "sha256": "5a603bd5eb4d540c4bbb8491d411b21c3f45552be9a2e3f12835b5b0c6d9bbbf"
     },
     {
       "path": "README.md",
@@ -42,7 +42,7 @@
     },
     {
       "path": "screenshot.png",
-      "sha256": "e51ae5f4cf54da046580199d8822c8e595e0442e07658824cae61d760cb743c5"
+      "sha256": "8622b96100040f976bb588bee336a918ecd7ef01becdbf4a88e2d0da3c15f362"
     },
     {
       "path": "scripts/build.mjs",
@@ -57,12 +57,16 @@
       "sha256": "555f897860b881817f6aa66a933a38fb31388b461b8fa1e9e9b6126b67bc18e0"
     },
     {
+      "path": "scripts/publish.sh",
+      "sha256": "272abe246e7b12684741a9eb3a26928ec7dd9a62ad4e26b95fa104c32d516412"
+    },
+    {
       "path": "scripts/render-screenshot.sh",
       "sha256": "d2fe525f530446f4f53add2abcfed2ec7f11253a7d128608781ccd18487fbb25"
     },
     {
       "path": "scripts/screenshot-marketing.html",
-      "sha256": "6f3f23bbfe697e3c9b862e7f19d879b1dd38c06694a4af227ad055a608b6b7c4"
+      "sha256": "07774b3a8e77d3c6cc5a1495c0acc398134d86e2726eaad54d4c7c2ce76c5511"
     },
     {
       "path": "src/components/ImportEnvView.tsx",
@@ -113,5 +117,6 @@
       "sha256": "2d4ac4b984c9b3891a9eabb63b9b5c9e6164b291453e8071055a56d68d67bfda"
     }
   ],
-  "signature": "W2ReN9rGFnd3Glj/w+kJ8Pb5NjrMZ6/I4BdmLB7p05cJZiiJS0bjCY5zk22TmCa8jr3YaEKAUpsT2pGSQNc4Bw=="
+  "keyId": "com.harborclient.plugins.dotenv",
+  "signature": "/CGNZSL0iBMhpZspooUQXBGtdm4PQ3ffyIOxJh1ayrdenn8q0Gm/jEuJWOT+N9ovvQ9FaQ9wBKuZ23o43NymCg=="
 }

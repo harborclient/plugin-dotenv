@@ -1,11 +1,14 @@
 {
   "id": "com.harborclient.plugins.dotenv",
   "name": "Dotenv",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "author": "HarborClient",
   "summary": "HarborClient plugin that links a .env file to an environment and keeps variables in sync.",
   "description": "README.md",
-  "categories": ["environments", "import"],
+  "categories": [
+    "environments",
+    "import"
+  ],
   "screenshots": [
     "https://raw.githubusercontent.com/harborclient/plugin-dotenv/main/screenshot.png"
   ],
@@ -13,11 +16,37 @@
     "harborclient": ">=1.9.0"
   },
   "renderer": "dist/renderer.js",
-  "permissions": ["ui", "filesystem:pick", "filesystem:read", "storage"],
+  "permissions": [
+    "ui",
+    "filesystem:pick",
+    "filesystem:read",
+    "storage"
+  ],
   "contributes": {
-    "settingsSections": [{ "id": "defaults", "title": "Dotenv Sync" }],
-    "commands": [{ "id": "import", "title": "Import .env" }],
-    "menus": [{ "menu": "file", "command": "import", "group": "import" }],
-    "mainViews": [{ "id": "import", "title": "Import .env" }]
+    "settingsSections": [
+      {
+        "id": "defaults",
+        "title": "Dotenv Sync"
+      }
+    ],
+    "commands": [
+      {
+        "id": "import",
+        "title": "Import .env"
+      }
+    ],
+    "menus": [
+      {
+        "menu": "file",
+        "command": "import",
+        "group": "import"
+      }
+    ],
+    "mainViews": [
+      {
+        "id": "import",
+        "title": "Import .env"
+      }
+    ]
   }
 }
