@@ -42,7 +42,7 @@
     },
     {
       "path": "screenshot.png",
-      "sha256": "8622b96100040f976bb588bee336a918ecd7ef01becdbf4a88e2d0da3c15f362"
+      "sha256": "9f059e77b7c1f2f73abc39d64452c52ddcb621cbda55fa1acc112dc9510b822e"
     },
     {
       "path": "scripts/build.mjs",
@@ -118,5 +118,5 @@
     }
   ],
   "keyId": "com.harborclient.plugins.dotenv",
-  "signature": "/CGNZSL0iBMhpZspooUQXBGtdm4PQ3ffyIOxJh1ayrdenn8q0Gm/jEuJWOT+N9ovvQ9FaQ9wBKuZ23o43NymCg=="
+  "signature": "/kctPRnTwFaRWJl0GjXyDgikkY/YCVEePW13Xw9o1JslEZ0CIS3bjWjhUY5t7Qbw+SiaewR4Xb9Mk8fweYG3BA=="
 }
