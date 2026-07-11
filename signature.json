@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "pluginId": "com.harborclient.plugins.dotenv",
-  "pluginVersion": "1.0.11",
+  "pluginVersion": "1.0.12",
   "algorithm": "Ed25519",
   "files": [
     {
@@ -18,7 +18,7 @@
     },
     {
       "path": "dist/renderer.js",
-      "sha256": "98202a6c219874b3a8913d83f3dcfba90fa29f353d1d8a5c1aa46e3704555d09"
+      "sha256": "33f67fbc2772bf90d155c587c9337aae3d75c97b8679a462cbfcde1d5b6ca2f3"
     },
     {
       "path": "eslint.config.mjs",
@@ -26,15 +26,15 @@
     },
     {
       "path": "manifest.json",
-      "sha256": "36b86d0b8819b1c5805e7d959e18b6f5e635ed6c2b72d6cf1b656543856eeda4"
+      "sha256": "ef29e9a40eec763d6e25408adbf9d659b406621ae2a8da8bb0a1986281624fb2"
     },
     {
       "path": "package.json",
-      "sha256": "9e40b1ba2ce23aa02e87bec29b84004c42e6ca574a7beca2400f307d915282c2"
+      "sha256": "546021fb70640ff8b34f3761a1f79ac50816870a513a5b152e60339b335941d7"
     },
     {
       "path": "pnpm-lock.yaml",
-      "sha256": "5a603bd5eb4d540c4bbb8491d411b21c3f45552be9a2e3f12835b5b0c6d9bbbf"
+      "sha256": "8bcca678469f56e55869c98ec6b0931d3c9510f084e4578d7d2ba7a618b69477"
     },
     {
       "path": "README.md",
@@ -58,7 +58,7 @@
     },
     {
       "path": "scripts/publish.sh",
-      "sha256": "272abe246e7b12684741a9eb3a26928ec7dd9a62ad4e26b95fa104c32d516412"
+      "sha256": "8a0a899d425d2d3c67f5560a54a92f080225fa022e70eac920f14c963f825c69"
     },
     {
       "path": "src/components/ImportEnvView.tsx",
@@ -70,7 +70,7 @@
     },
     {
       "path": "src/renderer.tsx",
-      "sha256": "72d1b6d3e4c71432620c1d8c0d108ae8b5b5220d9db53510b53e625ea1e475dd"
+      "sha256": "d6fbeff6ed595249c7b4000907f23e17402d269524af146c2597c367aff1b53a"
     },
     {
       "path": "src/storage/defaults.ts",
@@ -110,5 +110,5 @@
     }
   ],
   "keyId": "com.harborclient.plugins.dotenv",
-  "signature": "D4guPzFegJc9VCEJ/NrrWkjYORJ3Liava8sDwzArGgX6ikox7INP6Q+ui+zaD08IIgVjnlg0mH0AGKPb6W5sAw=="
+  "signature": "833n/FDRg8QnCFCQifjO88S4JHMhX5N+YKyuHfnVaL+I59UXF9RHMgsrLi2gsZhBFlF3supeGUZMlf5mkIUmBw=="
 }
