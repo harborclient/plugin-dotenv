@@ -12,11 +12,11 @@
     "format:check": "prettier --check .",
     "test": "vitest run",
     "pack": "pnpm build && zip -r dotenv.hcp manifest.json README.md dist",
-    "plugin:sign": "node --experimental-strip-types scripts/plugin-sign.ts",
-    "plugin:verify": "node --experimental-strip-types scripts/plugin-verify.ts"
+    "sign": "node --experimental-strip-types scripts/plugin-sign.ts",
+    "verify": "node --experimental-strip-types scripts/plugin-verify.ts"
   },
   "dependencies": {
-    "@harborclient/sdk": "^1.0.33",
+    "@harborclient/sdk": "^1.0.67",
     "dotenv": "^16.6.1"
   },
   "devDependencies": {

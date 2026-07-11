@@ -438,7 +438,7 @@ var require_main = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.33_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_157abbd94590b2f78fec5a4540f77510/node_modules/@harborclient/sdk/dist/runtime/reactHost.js
+// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/runtime/reactHost.js
 var HOST_REACT_GLOBAL_KEY = "__HARBORCLIENT_HOST_REACT__";
 var hostReact = null;
 function readGlobalHostReact() {
@@ -447,12 +447,6 @@ function readGlobalHostReact() {
   }
   const candidate = globalThis[HOST_REACT_GLOBAL_KEY];
   return candidate ?? null;
-}
-function setHostReact(react) {
-  hostReact = react;
-  if (typeof globalThis !== "undefined") {
-    globalThis[HOST_REACT_GLOBAL_KEY] = react;
-  }
 }
 function requireHostReact() {
   if (hostReact == null) {
@@ -469,12 +463,7 @@ function requireHostReact() {
   return hostReact;
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.33_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_157abbd94590b2f78fec5a4540f77510/node_modules/@harborclient/sdk/dist/runtime/index.js
-function installReact(react) {
-  setHostReact(react);
-}
-
-// node_modules/.pnpm/@harborclient+sdk@1.0.33_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_157abbd94590b2f78fec5a4540f77510/node_modules/@harborclient/sdk/dist/runtime/react.js
+// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/runtime/react.js
 function hook(name) {
   const react = requireHostReact();
   const fn = react[name];
@@ -564,7 +553,7 @@ var defaultExport = new Proxy(reactNamespace, {
   }
 });
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.33_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_157abbd94590b2f78fec5a4540f77510/node_modules/@harborclient/sdk/dist/runtime/jsx-runtime.js
+// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/runtime/jsx-runtime.js
 var Fragment = Symbol.for("@harborclient/sdk.Fragment");
 function build(type, props, key) {
   const react = requireHostReact();
@@ -3847,13 +3836,13 @@ var getDefaultConfig = () => {
 };
 var twMerge = /* @__PURE__ */ createTailwindMerge(getDefaultConfig);
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.33_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_157abbd94590b2f78fec5a4540f77510/node_modules/@harborclient/sdk/dist/components/utils.js
+// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/utils.js
 function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
 var cleanVariables = (variables) => variables.filter((v2) => v2.key.trim() || v2.value.trim() || v2.defaultValue.trim());
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.33_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_157abbd94590b2f78fec5a4540f77510/node_modules/@harborclient/sdk/dist/components/FieldError/index.js
+// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/FieldError/index.js
 function spacingClasses(spacing) {
   switch (spacing) {
     case "section":
@@ -3871,7 +3860,7 @@ function FieldError({ children, spacing = "field", roleAlert = true, className, 
   return jsx("p", { ...props, className: cn("hc-field-error text-[14px] text-danger", spacingClasses(spacing), className), role: roleAlert ? "alert" : void 0, children });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.33_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_157abbd94590b2f78fec5a4540f77510/node_modules/@harborclient/sdk/dist/components/Button/index.js
+// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/Button/index.js
 var BUTTON_BASE = "inline-flex cursor-pointer items-center rounded-full app-no-drag";
 var VARIANT_CLASSES = {
   primary: cn(BUTTON_BASE, "min-h-[32px] justify-center border border-transparent bg-accent px-3 py-1 text-[15px] font-medium text-white shadow-sm hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"),
@@ -3886,7 +3875,7 @@ function Button({ variant = "primary", className, type = "button", innerRef, ...
   return jsx("button", { ref: innerRef, type, className: cn("hc-button", VARIANT_CLASSES[variant], className), ...props });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.33_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_157abbd94590b2f78fec5a4540f77510/node_modules/@harborclient/sdk/dist/components/forms/classes.js
+// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/forms/classes.js
 var field = "rounded-lg border border-separator bg-field px-2.5 py-1.5 text-[16px] text-text app-no-drag";
 var surfaceField = "w-full rounded-lg border border-separator bg-field px-3 py-2.5 text-[15px] text-text";
 var checkboxInput = "peer absolute inset-0 m-0 h-full w-full cursor-pointer opacity-0 disabled:cursor-not-allowed";
@@ -3896,18 +3885,18 @@ function mergeFieldClasses(variant, className, rootClass) {
   return result === "" ? void 0 : result;
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.33_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_157abbd94590b2f78fec5a4540f77510/node_modules/@harborclient/sdk/dist/components/forms/Checkbox.js
+// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/forms/Checkbox.js
 function Checkbox({ ref, className, ...props }) {
   return jsxs("span", { className: cn("hc-checkbox relative inline-flex h-[18px] w-[18px] shrink-0 leading-none", className), children: [jsx("input", { ...props, ref, type: "checkbox", className: cn("hc-checkbox-input", checkboxInput) }), jsx("span", { className: cn("hc-checkbox-box", checkboxBox), "aria-hidden": true, children: jsx("svg", { className: "hc-checkbox-icon h-3 w-3", viewBox: "0 0 12 12", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: jsx("path", { d: "M2.5 6L5 8.5L9.5 3.5", stroke: "currentColor", strokeWidth: "1.5", strokeLinecap: "round", strokeLinejoin: "round" }) }) })] });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.33_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_157abbd94590b2f78fec5a4540f77510/node_modules/@harborclient/sdk/dist/components/forms/Input.js
+// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/forms/Input.js
 function Input({ ref, variant = "control", type, className, ...props }) {
   const resolvedVariant = type === "checkbox" || type === "radio" ? "plain" : variant;
   return jsx("input", { ref, type, className: mergeFieldClasses(resolvedVariant, className, "hc-input"), ...props });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.33_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_157abbd94590b2f78fec5a4540f77510/node_modules/@harborclient/sdk/dist/components/forms/Select.js
+// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/forms/Select.js
 function Select({ ref, variant = "control", className, children, ...props }) {
   return jsx("select", { ref, className: mergeFieldClasses(variant, className, "hc-select"), ...props, children });
 }
@@ -7765,7 +7754,7 @@ var FontAwesomeIcon = React.forwardRef((props, ref) => {
 FontAwesomeIcon.displayName = "FontAwesomeIcon";
 var DEFAULT_CLASSNAMES = `${LAYER_CLASSES.default} ${STYLE_CLASSES.fixedWidth}`;
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.33_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_157abbd94590b2f78fec5a4540f77510/node_modules/@harborclient/sdk/dist/components/FaIcon/index.js
+// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/FaIcon/index.js
 function FaIcon({ icon: icon3, className = "h-3.5 w-3.5", title, ...props }) {
   return createElement(FontAwesomeIcon, {
     ...props,
@@ -7776,37 +7765,37 @@ function FaIcon({ icon: icon3, className = "h-3.5 w-3.5", title, ...props }) {
   });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.33_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_157abbd94590b2f78fec5a4540f77510/node_modules/@harborclient/sdk/dist/components/Table/TableContext.js
+// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/Table/TableContext.js
 var tableHeadClass = "border-r border-b border-separator p-3 text-left text-[14px] font-medium uppercase tracking-wide text-muted last:border-r-0";
 var tableCellClass = "border-r border-b border-separator p-3 last:border-r-0";
 var tableHeadClassLoose = "pb-1 text-left text-[14px] font-medium uppercase tracking-wide text-muted";
 var tableCellClassLoose = "";
 var TableVariantContext = createContext("bordered");
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.33_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_157abbd94590b2f78fec5a4540f77510/node_modules/@harborclient/sdk/dist/components/Table/TableBody.js
+// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/Table/TableBody.js
 function TableBody({ children, className, ...props }) {
   const variant = useContext(TableVariantContext);
   return jsx("tbody", { ...props, className: cn(variant === "bordered" ? "hc-table-body [&_tr:last-child_td]:border-b-0" : "hc-table-body", className), children });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.33_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_157abbd94590b2f78fec5a4540f77510/node_modules/@harborclient/sdk/dist/components/Table/TableCell.js
+// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/Table/TableCell.js
 function TableCell({ children, className, ...props }) {
   const variant = useContext(TableVariantContext);
   return jsx("td", { ...props, className: cn("hc-table-cell", variant === "loose" ? tableCellClassLoose : tableCellClass, className), children });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.33_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_157abbd94590b2f78fec5a4540f77510/node_modules/@harborclient/sdk/dist/components/Table/TableHead.js
+// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/Table/TableHead.js
 function TableHead({ children, className, scope = "col", ...props }) {
   const variant = useContext(TableVariantContext);
   return jsx("th", { ...props, scope, className: cn("hc-table-head", variant === "loose" ? tableHeadClassLoose : tableHeadClass, className), children });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.33_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_157abbd94590b2f78fec5a4540f77510/node_modules/@harborclient/sdk/dist/components/Table/TableHeader.js
+// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/Table/TableHeader.js
 function TableHeader({ children, className, ...props }) {
   return jsx("thead", { ...props, className: cn("hc-table-header", className), children });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.33_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_157abbd94590b2f78fec5a4540f77510/node_modules/@harborclient/sdk/dist/components/Table/index.js
+// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/Table/index.js
 function Table({ children, variant = "bordered", className, ...props }) {
   if (variant === "loose") {
     return createElement(TableVariantContext.Provider, { value: variant }, createElement("table", {
@@ -7820,7 +7809,7 @@ function Table({ children, variant = "bordered", className, ...props }) {
   }, createElement("table", { className: "hc-table-element w-full border-collapse" }, children)));
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.33_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_157abbd94590b2f78fec5a4540f77510/node_modules/@harborclient/sdk/dist/components/enhanceControl.js
+// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/enhanceControl.js
 var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
 var FORM_CONTROL_TAGS = /* @__PURE__ */ new Set(["button", "input", "select", "textarea"]);
 function getSingleChild(node) {
@@ -7882,7 +7871,7 @@ function enhanceControl(child, options) {
   return applyAriaProps(child, options);
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.33_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_157abbd94590b2f78fec5a4540f77510/node_modules/@harborclient/sdk/dist/components/FormGroup/index.js
+// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/FormGroup/index.js
 function labelClasses(tone, srOnly, inline) {
   const base = "hc-form-group-label text-[18px]";
   const visibility = srOnly ? "sr-only" : "";
@@ -7943,14 +7932,17 @@ function FormGroup({ label, children, htmlFor, description, error, errorId, desc
   return jsxs("div", { ...props, className: wrapperClasses, children: [jsxs("label", { htmlFor, className: "hc-form-group-label flex flex-col gap-1", children: [jsx("span", { className: labelClasses(labelTone, srOnly, false), children: label }), resolvedDescriptionId ? jsx("p", { id: resolvedDescriptionId, className: "hc-form-group-description m-0 text-[14px] text-muted", children: description }) : null, control] }), resolvedErrorId ? jsx(FieldError, { id: resolvedErrorId, spacing: "field", children: error }) : null] });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.33_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_157abbd94590b2f78fec5a4540f77510/node_modules/@harborclient/sdk/dist/components/StatusMessage/index.js
+// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/StatusMessage/index.js
 function StatusMessage({ children, live = true, className, ...props }) {
   return jsx("p", { ...props, className: cn("hc-status-message text-[14px] text-muted", className), role: live ? "status" : void 0, "aria-live": live ? "polite" : void 0, children });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.33_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_157abbd94590b2f78fec5a4540f77510/node_modules/@harborclient/sdk/dist/components/VariableTable/index.js
+// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/VariableTable/index.js
+import { useEffect as useEffect2, useRef as useRef2 } from "react";
 var emptyVariable = () => ({ key: "", value: "", defaultValue: "", share: false });
-function VariableTable({ variables, onChange: onChange2, description, className, ...props }) {
+function VariableTable({ variables, onChange: onChange2, description, focusKey, className, ...props }) {
+  const valueInputRefs = useRef2(/* @__PURE__ */ new Map());
+  const lastFocusedKeyRef = useRef2(void 0);
   const updateVariable = (index, patch) => {
     onChange2(variables.map((row, i2) => i2 === index ? { ...row, ...patch } : row));
   };
@@ -7964,7 +7956,34 @@ function VariableTable({ variables, onChange: onChange2, description, className,
     }
     onChange2(variables.filter((_2, i2) => i2 !== index));
   };
-  return jsxs("div", { ...props, className: cn("hc-variable-table", className), children: [description && jsx("p", { className: "hc-variable-table-description mb-3 text-[14px] text-muted", children: description }), jsxs("div", { className: "hc-variable-table-content flex flex-col gap-1.5", children: [jsxs(Table, { children: [jsx(TableHeader, { children: jsxs("tr", { children: [jsx(TableHead, { children: "Key" }), jsx(TableHead, { children: "Value" }), jsx(TableHead, { children: "Default" }), jsx(TableHead, { className: "w-14 text-center", children: "Share" }), jsx(TableHead, { className: "w-7 p-0 text-center" })] }) }), jsx(TableBody, { children: variables.map((variable, index) => jsxs("tr", { children: [jsx(TableCell, { children: jsx(Input, { type: "text", className: "w-full", value: variable.key, placeholder: "variable", "aria-label": `Key, row ${index + 1}`, onChange: (e2) => updateVariable(index, { key: e2.target.value }) }) }), jsx(TableCell, { children: jsx(Input, { type: "text", className: "w-full", value: variable.value, placeholder: "value", "aria-label": `Value, row ${index + 1}`, onChange: (e2) => updateVariable(index, { value: e2.target.value }) }) }), jsx(TableCell, { children: jsx(Input, { type: "text", className: "w-full", value: variable.defaultValue, placeholder: "default", "aria-label": `Default, row ${index + 1}`, onChange: (e2) => updateVariable(index, { defaultValue: e2.target.value }) }) }), jsx(TableCell, { className: "w-14 text-center", children: jsx(Checkbox, { checked: variable.share, onChange: (e2) => updateVariable(index, { share: e2.target.checked }), "aria-label": `Include value in export, row ${index + 1}`, title: "Include value in export" }) }), jsx(TableCell, { className: "w-7 p-0 text-center", children: jsx(Button, { type: "button", variant: "iconDanger", onClick: () => removeVariable(index), title: "Remove", "aria-label": `Remove row ${index + 1}`, children: jsx(FaIcon, { icon: faXmark, className: "h-3.5 w-3.5" }) }) })] }, index)) })] }), jsxs(Button, { type: "button", variant: "toolbar", className: "hc-variable-table-add inline-flex items-center gap-1 self-start", onClick: addVariable, children: [jsx(FaIcon, { icon: faPlus, className: "h-3 w-3" }), "Add variable"] })] })] });
+  useEffect2(() => {
+    const trimmedFocusKey = focusKey?.trim();
+    if (!trimmedFocusKey || trimmedFocusKey === lastFocusedKeyRef.current) {
+      return;
+    }
+    const rowIndex = variables.findIndex((variable) => variable.key.trim() === trimmedFocusKey);
+    if (rowIndex < 0) {
+      return;
+    }
+    lastFocusedKeyRef.current = trimmedFocusKey;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const input = valueInputRefs.current.get(rowIndex);
+        if (input == null || typeof input.focus !== "function" || typeof input.select !== "function") {
+          return;
+        }
+        input.scrollIntoView({ block: "nearest" });
+        input.focus();
+        input.select();
+      });
+    });
+  }, [focusKey, variables]);
+  return jsxs("div", { ...props, className: cn("hc-variable-table", className), children: [description && jsx("p", { className: "hc-variable-table-description mb-3 text-[14px] text-muted", children: description }), jsxs("div", { className: "hc-variable-table-content flex flex-col gap-1.5", children: [jsxs(Table, { children: [jsx(TableHeader, { children: jsxs("tr", { children: [jsx(TableHead, { children: "Key" }), jsx(TableHead, { children: "Value" }), jsx(TableHead, { children: "Default" }), jsx(TableHead, { className: "w-14 text-center", children: "Share" }), jsx(TableHead, { className: "w-7 p-0 text-center" })] }) }), jsx(TableBody, { children: variables.map((variable, index) => jsxs("tr", { children: [jsx(TableCell, { children: jsx(Input, { type: "text", className: "w-full", value: variable.key, placeholder: "variable", "aria-label": `Key, row ${index + 1}`, onChange: (e2) => updateVariable(index, { key: e2.target.value }) }) }), jsx(TableCell, { children: jsx(Input, { ref: (element) => {
+    if (element)
+      valueInputRefs.current.set(index, element);
+    else
+      valueInputRefs.current.delete(index);
+  }, type: "text", className: "w-full", value: variable.value, placeholder: "value", "aria-label": `Value, row ${index + 1}`, onChange: (e2) => updateVariable(index, { value: e2.target.value }) }) }), jsx(TableCell, { children: jsx(Input, { type: "text", className: "w-full", value: variable.defaultValue, placeholder: "default", "aria-label": `Default, row ${index + 1}`, onChange: (e2) => updateVariable(index, { defaultValue: e2.target.value }) }) }), jsx(TableCell, { className: "w-14 text-center", children: jsx(Checkbox, { checked: variable.share, onChange: (e2) => updateVariable(index, { share: e2.target.checked }), "aria-label": `Include value in export, row ${index + 1}`, title: "Include value in export" }) }), jsx(TableCell, { className: "w-7 p-0 text-center", children: jsx(Button, { type: "button", variant: "iconDanger", onClick: () => removeVariable(index), title: "Remove", "aria-label": `Remove row ${index + 1}`, children: jsx(FaIcon, { icon: faXmark, className: "h-3.5 w-3.5" }) }) })] }, index)) })] }), jsxs(Button, { type: "button", variant: "toolbar", className: "hc-variable-table-add inline-flex items-center gap-1 self-start", onClick: addVariable, children: [jsx(FaIcon, { icon: faPlus, className: "h-3 w-3" }), "Add variable"] })] })] });
 }
 
 // src/storage/defaults.ts
@@ -8297,7 +8316,6 @@ function SettingsPanel({ hc }) {
 
 // src/renderer.tsx
 function activate(hc) {
-  installReact(hc.react);
   function SettingsPanelHost() {
     return /* @__PURE__ */ jsx(SettingsPanel, { hc });
   }

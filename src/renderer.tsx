@@ -1,4 +1,3 @@
-import { installReact } from "@harborclient/sdk";
 import type { PluginContext } from "@harborclient/sdk";
 import { ImportEnvView } from "./components/ImportEnvView";
 import { SettingsPanel } from "./components/SettingsPanel";
@@ -9,8 +8,6 @@ import { SettingsPanel } from "./components/SettingsPanel";
  * @param hc - Renderer plugin context from the HarborClient host.
  */
 export function activate(hc: PluginContext): void {
-  installReact(hc.react);
-
   /**
    * Settings panel host that closes over the plugin context.
    */
