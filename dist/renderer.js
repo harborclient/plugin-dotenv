@@ -438,7 +438,7 @@ var require_main = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/runtime/reactHost.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.30_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_4c69e094e84595bddb023cfe7237cf60/node_modules/@harborclient/sdk/dist/runtime/reactHost.js
 var HOST_REACT_GLOBAL_KEY = "__HARBORCLIENT_HOST_REACT__";
 var hostReact = null;
 function readGlobalHostReact() {
@@ -463,7 +463,7 @@ function requireHostReact() {
   return hostReact;
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/runtime/react.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.30_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_4c69e094e84595bddb023cfe7237cf60/node_modules/@harborclient/sdk/dist/runtime/react.js
 function hook(name) {
   const react = requireHostReact();
   const fn = react[name];
@@ -524,8 +524,24 @@ function useId() {
 function useLayoutEffect(effect, deps) {
   return hook("useLayoutEffect")(effect, deps);
 }
+function useReducer(reducer, initialArg, init) {
+  return hook("useReducer")(reducer, initialArg, init);
+}
 function createElement(type, props, ...children) {
   return hook("createElement")(type, props, ...children);
+}
+function memo(Component, propsAreEqual) {
+  let Memoized = null;
+  function LazyMemo(props) {
+    const react = requireHostReact();
+    if (Memoized === null) {
+      Memoized = react.memo(Component, propsAreEqual);
+    }
+    return react.createElement(Memoized, props);
+  }
+  const displayName = (typeof Component === "function" ? Component.displayName ?? Component.name : null) ?? "Component";
+  LazyMemo.displayName = `Memo(${displayName})`;
+  return LazyMemo;
 }
 var reactNamespace = {
   useState,
@@ -542,7 +558,9 @@ var reactNamespace = {
   useContext,
   useId,
   useLayoutEffect,
-  createElement
+  useReducer,
+  createElement,
+  memo
 };
 var defaultExport = new Proxy(reactNamespace, {
   get(target, prop, receiver) {
@@ -553,7 +571,7 @@ var defaultExport = new Proxy(reactNamespace, {
   }
 });
 
-// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/runtime/jsx-runtime.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.30_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_4c69e094e84595bddb023cfe7237cf60/node_modules/@harborclient/sdk/dist/runtime/jsx-runtime.js
 var Fragment = Symbol.for("@harborclient/sdk.Fragment");
 function build(type, props, key) {
   const react = requireHostReact();
@@ -3836,13 +3854,13 @@ var getDefaultConfig = () => {
 };
 var twMerge = /* @__PURE__ */ createTailwindMerge(getDefaultConfig);
 
-// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/utils.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.30_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_4c69e094e84595bddb023cfe7237cf60/node_modules/@harborclient/sdk/dist/components/utils.js
 function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
 var cleanVariables = (variables) => variables.filter((v2) => v2.key.trim() || v2.value.trim() || v2.defaultValue.trim());
 
-// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/FieldError/index.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.30_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_4c69e094e84595bddb023cfe7237cf60/node_modules/@harborclient/sdk/dist/components/FieldError/index.js
 function spacingClasses(spacing) {
   switch (spacing) {
     case "section":
@@ -3860,7 +3878,7 @@ function FieldError({ children, spacing = "field", roleAlert = true, className, 
   return jsx("p", { ...props, className: cn("hc-field-error text-[14px] text-danger", spacingClasses(spacing), className), role: roleAlert ? "alert" : void 0, children });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/Button/index.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.30_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_4c69e094e84595bddb023cfe7237cf60/node_modules/@harborclient/sdk/dist/components/Button/index.js
 var BUTTON_BASE = "inline-flex cursor-pointer items-center rounded-full app-no-drag";
 var VARIANT_CLASSES = {
   primary: cn(BUTTON_BASE, "min-h-[32px] justify-center border border-transparent bg-accent px-3 py-1 text-[15px] font-medium text-white shadow-sm hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"),
@@ -3875,7 +3893,7 @@ function Button({ variant = "primary", className, type = "button", innerRef, ...
   return jsx("button", { ref: innerRef, type, className: cn("hc-button", VARIANT_CLASSES[variant], className), ...props });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/forms/classes.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.30_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_4c69e094e84595bddb023cfe7237cf60/node_modules/@harborclient/sdk/dist/components/forms/classes.js
 var field = "rounded-lg border border-separator bg-field px-2.5 py-1.5 text-text app-no-drag";
 var surfaceField = "w-full rounded-lg border border-separator bg-field px-3 py-2.5 text-[15px] text-text";
 var checkboxInput = "peer absolute inset-0 m-0 h-full w-full cursor-pointer opacity-0 disabled:cursor-not-allowed";
@@ -3885,23 +3903,23 @@ function mergeFieldClasses(variant, className, rootClass) {
   return result === "" ? void 0 : result;
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/forms/Checkbox.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.30_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_4c69e094e84595bddb023cfe7237cf60/node_modules/@harborclient/sdk/dist/components/forms/Checkbox.js
 function Checkbox({ ref, className, ...props }) {
   return jsxs("span", { className: cn("hc-checkbox relative inline-flex h-[18px] w-[18px] shrink-0 leading-none", className), children: [jsx("input", { ...props, ref, type: "checkbox", className: cn("hc-checkbox-input", checkboxInput) }), jsx("span", { className: cn("hc-checkbox-box", checkboxBox), "aria-hidden": true, children: jsx("svg", { className: "hc-checkbox-icon h-3 w-3", viewBox: "0 0 12 12", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: jsx("path", { d: "M2.5 6L5 8.5L9.5 3.5", stroke: "currentColor", strokeWidth: "1.5", strokeLinecap: "round", strokeLinejoin: "round" }) }) })] });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/forms/Input.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.30_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_4c69e094e84595bddb023cfe7237cf60/node_modules/@harborclient/sdk/dist/components/forms/Input.js
 function Input({ ref, variant = "control", type, className, ...props }) {
   const resolvedVariant = type === "checkbox" || type === "radio" ? "plain" : variant;
   return jsx("input", { ref, type, className: mergeFieldClasses(resolvedVariant, className, "hc-input"), ...props });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/forms/Select.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.30_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_4c69e094e84595bddb023cfe7237cf60/node_modules/@harborclient/sdk/dist/components/forms/Select.js
 function Select({ ref, variant = "control", className, children, ...props }) {
   return jsx("select", { ref, className: mergeFieldClasses(variant, className, "hc-select"), ...props, children });
 }
 
-// node_modules/.pnpm/@fortawesome+free-solid-svg-icons@7.3.0/node_modules/@fortawesome/free-solid-svg-icons/index.mjs
+// node_modules/.pnpm/@fortawesome+free-solid-svg-icons@7.3.1/node_modules/@fortawesome/free-solid-svg-icons/index.mjs
 var faXmark = {
   prefix: "fas",
   iconName: "xmark",
@@ -3913,10 +3931,10 @@ var faPlus = {
   icon: [448, 512, [10133, 61543, "add"], "2b", "M256 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 160-160 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l160 0 0 160c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160 160 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-160 0 0-160z"]
 };
 
-// node_modules/.pnpm/@fortawesome+react-fontawesome@3.3.1_@fortawesome+fontawesome-svg-core@7.3.0_react@19.2.7/node_modules/@fortawesome/react-fontawesome/dist/index.js
+// node_modules/.pnpm/@fortawesome+react-fontawesome@3.5.0_@fortawesome+fontawesome-svg-core@7.3.1_react@19.2.7/node_modules/@fortawesome/react-fontawesome/dist/index.js
 import React, { useId as useId2, useMemo as useMemo2 } from "react";
 
-// node_modules/.pnpm/@fortawesome+fontawesome-svg-core@7.3.0/node_modules/@fortawesome/fontawesome-svg-core/index.mjs
+// node_modules/.pnpm/@fortawesome+fontawesome-svg-core@7.3.1/node_modules/@fortawesome/fontawesome-svg-core/index.mjs
 function _arrayLikeToArray(r3, a2) {
   (null == a2 || a2 > r3.length) && (a2 = r3.length);
   for (var e2 = 0, n2 = Array(a2); e2 < a2; e2++) n2[e2] = r3[e2];
@@ -6167,7 +6185,7 @@ var p$2 = config.measurePerformance && PERFORMANCE && PERFORMANCE.mark && PERFOR
   mark: noop$1,
   measure: noop$1
 };
-var preamble = 'FA "7.3.0"';
+var preamble = 'FA "7.3.1"';
 var begin = function begin2(name) {
   p$2.mark("".concat(preamble, " ").concat(name, " begins"));
   return function() {
@@ -7357,7 +7375,7 @@ var layer = api.layer;
 var text = api.text;
 var counter = api.counter;
 
-// node_modules/.pnpm/@fortawesome+react-fontawesome@3.3.1_@fortawesome+fontawesome-svg-core@7.3.0_react@19.2.7/node_modules/@fortawesome/react-fontawesome/dist/index.js
+// node_modules/.pnpm/@fortawesome+react-fontawesome@3.5.0_@fortawesome+fontawesome-svg-core@7.3.1_react@19.2.7/node_modules/@fortawesome/react-fontawesome/dist/index.js
 function _isNumerical(object) {
   object = object - 0;
   return object === object;
@@ -7551,7 +7569,17 @@ var ANIMATION_CLASSES = {
   spin: "fa-spin",
   spinPulse: "fa-spin-pulse",
   spinReverse: "fa-spin-reverse",
-  pulse: "fa-pulse"
+  pulse: "fa-pulse",
+  // the following animations are only supported in version 7.3.0 and later
+  flip360: "fa-flip-360",
+  buzz: "fa-buzz",
+  float: "fa-float",
+  jello: "fa-jello",
+  spinSnap: "fa-spin-snap",
+  spinSnap4: "fa-spin-snap-4",
+  spinSnap8: "fa-spin-snap-8",
+  swing: "fa-swing",
+  wag: "fa-wag"
 };
 var PULL_CLASSES = {
   left: "fa-pull-left",
@@ -7590,7 +7618,10 @@ var STYLE_CLASSES = {
   inverse: "fa-inverse",
   rotateBy: "fa-rotate-by",
   swapOpacity: "fa-swap-opacity",
-  widthAuto: "fa-width-auto"
+  widthAuto: "fa-width-auto",
+  // the following style classes are only supported in version 7.3.0 and later
+  canvasSquare: "fa-canvas-square",
+  canvasRoomy: "fa-canvas-roomy"
 };
 var LAYER_CLASSES = {
   default: "fa-layers"
@@ -7623,6 +7654,17 @@ function getClassListFromProps(props) {
     swapOpacity,
     rotateBy,
     widthAuto,
+    canvasSquare,
+    canvasRoomy,
+    flip360,
+    buzz,
+    float,
+    jello,
+    spinSnap,
+    spinSnap4,
+    spinSnap8,
+    swing,
+    wag,
     className
   } = props;
   const result = [];
@@ -7655,6 +7697,17 @@ function getClassListFromProps(props) {
   if (!getIsVersion7OrLater()) return result;
   if (rotateBy) result.push(STYLE_CLASSES.rotateBy);
   if (widthAuto) result.push(STYLE_CLASSES.widthAuto);
+  if (canvasSquare) result.push(STYLE_CLASSES.canvasSquare);
+  if (canvasRoomy) result.push(STYLE_CLASSES.canvasRoomy);
+  if (flip360) result.push(ANIMATION_CLASSES.flip360);
+  if (buzz) result.push(ANIMATION_CLASSES.buzz);
+  if (float) result.push(ANIMATION_CLASSES.float);
+  if (jello) result.push(ANIMATION_CLASSES.jello);
+  if (spinSnap) result.push(ANIMATION_CLASSES.spinSnap);
+  if (spinSnap4) result.push(ANIMATION_CLASSES.spinSnap4);
+  if (spinSnap8) result.push(ANIMATION_CLASSES.spinSnap8);
+  if (swing) result.push(ANIMATION_CLASSES.swing);
+  if (wag) result.push(ANIMATION_CLASSES.wag);
   const prefix = config$1.cssPrefix || config$1.familyPrefix || DEFAULT_CLASSNAME_PREFIX;
   return prefix === DEFAULT_CLASSNAME_PREFIX ? result : (
     // TODO: see if we can achieve custom prefix support without iterating
@@ -7704,7 +7757,18 @@ var DEFAULT_PROPS = {
   titleId: void 0,
   transform: void 0,
   swapOpacity: false,
-  widthAuto: false
+  widthAuto: false,
+  canvasSquare: false,
+  canvasRoomy: false,
+  flip360: false,
+  buzz: false,
+  float: false,
+  jello: false,
+  spinSnap: false,
+  spinSnap4: false,
+  spinSnap8: false,
+  swing: false,
+  wag: false
 };
 var DEFAULT_PROP_KEYS = new Set(Object.keys(DEFAULT_PROPS));
 var FontAwesomeIcon = React.forwardRef((props, ref) => {
@@ -7754,7 +7818,7 @@ var FontAwesomeIcon = React.forwardRef((props, ref) => {
 FontAwesomeIcon.displayName = "FontAwesomeIcon";
 var DEFAULT_CLASSNAMES = `${LAYER_CLASSES.default} ${STYLE_CLASSES.fixedWidth}`;
 
-// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/FaIcon/index.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.30_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_4c69e094e84595bddb023cfe7237cf60/node_modules/@harborclient/sdk/dist/components/FaIcon/index.js
 function FaIcon({ icon: icon3, className = "h-3.5 w-3.5", title, ...props }) {
   return createElement(FontAwesomeIcon, {
     ...props,
@@ -7765,37 +7829,37 @@ function FaIcon({ icon: icon3, className = "h-3.5 w-3.5", title, ...props }) {
   });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/Table/TableContext.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.30_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_4c69e094e84595bddb023cfe7237cf60/node_modules/@harborclient/sdk/dist/components/Table/TableContext.js
 var tableHeadClass = "border-r border-b border-separator p-3 text-left text-[14px] font-medium uppercase tracking-wide text-muted last:border-r-0";
 var tableCellClass = "border-r border-b border-separator p-3 last:border-r-0";
 var tableHeadClassLoose = "pb-1 text-left text-[14px] font-medium uppercase tracking-wide text-muted";
 var tableCellClassLoose = "";
 var TableVariantContext = createContext("bordered");
 
-// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/Table/TableBody.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.30_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_4c69e094e84595bddb023cfe7237cf60/node_modules/@harborclient/sdk/dist/components/Table/TableBody.js
 function TableBody({ children, className, ...props }) {
   const variant = useContext(TableVariantContext);
   return jsx("tbody", { ...props, className: cn(variant === "bordered" ? "hc-table-body [&_tr:last-child_td]:border-b-0" : "hc-table-body", className), children });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/Table/TableCell.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.30_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_4c69e094e84595bddb023cfe7237cf60/node_modules/@harborclient/sdk/dist/components/Table/TableCell.js
 function TableCell({ children, className, ...props }) {
   const variant = useContext(TableVariantContext);
   return jsx("td", { ...props, className: cn("hc-table-cell", variant === "loose" ? tableCellClassLoose : tableCellClass, className), children });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/Table/TableHead.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.30_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_4c69e094e84595bddb023cfe7237cf60/node_modules/@harborclient/sdk/dist/components/Table/TableHead.js
 function TableHead({ children, className, scope = "col", ...props }) {
   const variant = useContext(TableVariantContext);
   return jsx("th", { ...props, scope, className: cn("hc-table-head", variant === "loose" ? tableHeadClassLoose : tableHeadClass, className), children });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/Table/TableHeader.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.30_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_4c69e094e84595bddb023cfe7237cf60/node_modules/@harborclient/sdk/dist/components/Table/TableHeader.js
 function TableHeader({ children, className, ...props }) {
   return jsx("thead", { ...props, className: cn("hc-table-header", className), children });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/Table/index.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.30_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_4c69e094e84595bddb023cfe7237cf60/node_modules/@harborclient/sdk/dist/components/Table/index.js
 function Table({ children, variant = "bordered", className, ...props }) {
   if (variant === "loose") {
     return createElement(TableVariantContext.Provider, { value: variant }, createElement("table", {
@@ -7809,7 +7873,7 @@ function Table({ children, variant = "bordered", className, ...props }) {
   }, createElement("table", { className: "hc-table-element w-full border-collapse" }, children)));
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/enhanceControl.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.30_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_4c69e094e84595bddb023cfe7237cf60/node_modules/@harborclient/sdk/dist/components/enhanceControl.js
 var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
 var FORM_CONTROL_TAGS = /* @__PURE__ */ new Set(["button", "input", "select", "textarea"]);
 function getSingleChild(node) {
@@ -7871,7 +7935,7 @@ function enhanceControl(child, options) {
   return applyAriaProps(child, options);
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/FormGroup/index.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.30_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_4c69e094e84595bddb023cfe7237cf60/node_modules/@harborclient/sdk/dist/components/FormGroup/index.js
 function borderedWrapperClasses(bordered, layoutClasses, extra) {
   const frame = bordered ? "p-4 border border-separator rounded-md" : "";
   const base = `hc-form-group ${layoutClasses} ${frame}`.trim();
@@ -7937,12 +8001,12 @@ function FormGroup({ label, children, htmlFor, description, error, errorId, desc
   return jsxs("div", { ...props, className: wrapperClasses, children: [jsxs("label", { htmlFor, className: "hc-form-group-label flex flex-col gap-1", children: [jsx("span", { className: labelClasses(labelTone, srOnly, false), children: label }), resolvedDescriptionId ? jsx("p", { id: resolvedDescriptionId, className: "hc-form-group-description m-0 text-[14px] text-muted", children: description }) : null, control] }), resolvedErrorId ? jsx(FieldError, { id: resolvedErrorId, spacing: "field", children: error }) : null] });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/StatusMessage/index.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.30_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_4c69e094e84595bddb023cfe7237cf60/node_modules/@harborclient/sdk/dist/components/StatusMessage/index.js
 function StatusMessage({ children, live = true, className, ...props }) {
   return jsx("p", { ...props, className: cn("hc-status-message text-[14px] text-muted", className), role: live ? "status" : void 0, "aria-live": live ? "polite" : void 0, children });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/VariableTable/index.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.30_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_4c69e094e84595bddb023cfe7237cf60/node_modules/@harborclient/sdk/dist/components/VariableTable/index.js
 import { useEffect as useEffect2, useRef as useRef2 } from "react";
 var emptyVariable = () => ({ key: "", value: "", defaultValue: "", share: false });
 function VariableTable({ variables, onChange: onChange2, description, focusKey, className, ...props }) {
@@ -8362,7 +8426,7 @@ export {
 @fortawesome/free-solid-svg-icons/index.mjs:
 @fortawesome/fontawesome-svg-core/index.mjs:
   (*!
-   * Font Awesome Free 7.3.0 by @fontawesome - https://fontawesome.com
+   * Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com
    * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
    * Copyright 2026 Fonticons, Inc.
    *)
