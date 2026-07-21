@@ -22,31 +22,32 @@ export function activate(hc: PluginContext): void {
     return <ImportEnvView hc={hc} />;
   }
 
-  hc.subscriptions.push(
-    hc.ui.registerSettingsSection({
-      id: "defaults",
-      title: "Dotenv Sync",
-      Component: SettingsPanelHost,
-    }),
-    hc.ui.registerMainView({
-      id: "import",
-      title: "Import .env",
-      Component: ImportEnvViewHost,
-    }),
-    hc.ui.registerMenuItem({
-      menu: "file",
-      command: "import",
-      label: "Import .env",
-      group: "import",
-    }),
-    hc.commands.register("import", () => {
-      void hc.commands.execute(
-        "harborclient:openMainView",
-        hc.pluginId,
-        "import",
-      );
-    }),
-  );
+  hc.ui.registerSettingsSection({
+    id: "defaults",
+    title: "Dotenv Sync",
+    Component: SettingsPanelHost,
+  });
+
+  hc.ui.registerMainView({
+    id: "import",
+    title: "Import .env",
+    Component: ImportEnvViewHost,
+  });
+
+  hc.ui.registerMenuItem({
+    menu: "file",
+    command: "import",
+    label: "Import .env",
+    group: "import",
+  });
+
+  hc.commands.register("import", () => {
+    void hc.commands.execute(
+      "harborclient:openMainView",
+      hc.pluginId,
+      "import",
+    );
+  });
 }
 
 /**

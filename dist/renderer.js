@@ -438,7 +438,7 @@ var require_main = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/runtime/reactHost.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/runtime/reactHost.js
 var HOST_REACT_GLOBAL_KEY = "__HARBORCLIENT_HOST_REACT__";
 var hostReact = null;
 function readGlobalHostReact() {
@@ -463,7 +463,7 @@ function requireHostReact() {
   return hostReact;
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/runtime/react.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/runtime/react.js
 function hook(name) {
   const react = requireHostReact();
   const fn = react[name];
@@ -553,7 +553,7 @@ var defaultExport = new Proxy(reactNamespace, {
   }
 });
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/runtime/jsx-runtime.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/runtime/jsx-runtime.js
 var Fragment = Symbol.for("@harborclient/sdk.Fragment");
 function build(type, props, key) {
   const react = requireHostReact();
@@ -3836,13 +3836,13 @@ var getDefaultConfig = () => {
 };
 var twMerge = /* @__PURE__ */ createTailwindMerge(getDefaultConfig);
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/utils.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/utils.js
 function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
 var cleanVariables = (variables) => variables.filter((v2) => v2.key.trim() || v2.value.trim() || v2.defaultValue.trim());
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/FieldError/index.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/FieldError/index.js
 function spacingClasses(spacing) {
   switch (spacing) {
     case "section":
@@ -3860,7 +3860,7 @@ function FieldError({ children, spacing = "field", roleAlert = true, className, 
   return jsx("p", { ...props, className: cn("hc-field-error text-[14px] text-danger", spacingClasses(spacing), className), role: roleAlert ? "alert" : void 0, children });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/Button/index.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/Button/index.js
 var BUTTON_BASE = "inline-flex cursor-pointer items-center rounded-full app-no-drag";
 var VARIANT_CLASSES = {
   primary: cn(BUTTON_BASE, "min-h-[32px] justify-center border border-transparent bg-accent px-3 py-1 text-[15px] font-medium text-white shadow-sm hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"),
@@ -3875,8 +3875,8 @@ function Button({ variant = "primary", className, type = "button", innerRef, ...
   return jsx("button", { ref: innerRef, type, className: cn("hc-button", VARIANT_CLASSES[variant], className), ...props });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/forms/classes.js
-var field = "rounded-lg border border-separator bg-field px-2.5 py-1.5 text-[16px] text-text app-no-drag";
+// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/forms/classes.js
+var field = "rounded-lg border border-separator bg-field px-2.5 py-1.5 text-text app-no-drag";
 var surfaceField = "w-full rounded-lg border border-separator bg-field px-3 py-2.5 text-[15px] text-text";
 var checkboxInput = "peer absolute inset-0 m-0 h-full w-full cursor-pointer opacity-0 disabled:cursor-not-allowed";
 var checkboxBox = "pointer-events-none flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-sm border border-separator bg-field text-white peer-checked:border-accent peer-checked:bg-accent peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent peer-disabled:cursor-not-allowed peer-disabled:opacity-50 [&>svg]:opacity-0 peer-checked:[&>svg]:opacity-100";
@@ -3885,18 +3885,18 @@ function mergeFieldClasses(variant, className, rootClass) {
   return result === "" ? void 0 : result;
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/forms/Checkbox.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/forms/Checkbox.js
 function Checkbox({ ref, className, ...props }) {
   return jsxs("span", { className: cn("hc-checkbox relative inline-flex h-[18px] w-[18px] shrink-0 leading-none", className), children: [jsx("input", { ...props, ref, type: "checkbox", className: cn("hc-checkbox-input", checkboxInput) }), jsx("span", { className: cn("hc-checkbox-box", checkboxBox), "aria-hidden": true, children: jsx("svg", { className: "hc-checkbox-icon h-3 w-3", viewBox: "0 0 12 12", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: jsx("path", { d: "M2.5 6L5 8.5L9.5 3.5", stroke: "currentColor", strokeWidth: "1.5", strokeLinecap: "round", strokeLinejoin: "round" }) }) })] });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/forms/Input.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/forms/Input.js
 function Input({ ref, variant = "control", type, className, ...props }) {
   const resolvedVariant = type === "checkbox" || type === "radio" ? "plain" : variant;
   return jsx("input", { ref, type, className: mergeFieldClasses(resolvedVariant, className, "hc-input"), ...props });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/forms/Select.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/forms/Select.js
 function Select({ ref, variant = "control", className, children, ...props }) {
   return jsx("select", { ref, className: mergeFieldClasses(variant, className, "hc-select"), ...props, children });
 }
@@ -7754,7 +7754,7 @@ var FontAwesomeIcon = React.forwardRef((props, ref) => {
 FontAwesomeIcon.displayName = "FontAwesomeIcon";
 var DEFAULT_CLASSNAMES = `${LAYER_CLASSES.default} ${STYLE_CLASSES.fixedWidth}`;
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/FaIcon/index.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/FaIcon/index.js
 function FaIcon({ icon: icon3, className = "h-3.5 w-3.5", title, ...props }) {
   return createElement(FontAwesomeIcon, {
     ...props,
@@ -7765,37 +7765,37 @@ function FaIcon({ icon: icon3, className = "h-3.5 w-3.5", title, ...props }) {
   });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/Table/TableContext.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/Table/TableContext.js
 var tableHeadClass = "border-r border-b border-separator p-3 text-left text-[14px] font-medium uppercase tracking-wide text-muted last:border-r-0";
 var tableCellClass = "border-r border-b border-separator p-3 last:border-r-0";
 var tableHeadClassLoose = "pb-1 text-left text-[14px] font-medium uppercase tracking-wide text-muted";
 var tableCellClassLoose = "";
 var TableVariantContext = createContext("bordered");
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/Table/TableBody.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/Table/TableBody.js
 function TableBody({ children, className, ...props }) {
   const variant = useContext(TableVariantContext);
   return jsx("tbody", { ...props, className: cn(variant === "bordered" ? "hc-table-body [&_tr:last-child_td]:border-b-0" : "hc-table-body", className), children });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/Table/TableCell.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/Table/TableCell.js
 function TableCell({ children, className, ...props }) {
   const variant = useContext(TableVariantContext);
   return jsx("td", { ...props, className: cn("hc-table-cell", variant === "loose" ? tableCellClassLoose : tableCellClass, className), children });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/Table/TableHead.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/Table/TableHead.js
 function TableHead({ children, className, scope = "col", ...props }) {
   const variant = useContext(TableVariantContext);
   return jsx("th", { ...props, scope, className: cn("hc-table-head", variant === "loose" ? tableHeadClassLoose : tableHeadClass, className), children });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/Table/TableHeader.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/Table/TableHeader.js
 function TableHeader({ children, className, ...props }) {
   return jsx("thead", { ...props, className: cn("hc-table-header", className), children });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/Table/index.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/Table/index.js
 function Table({ children, variant = "bordered", className, ...props }) {
   if (variant === "loose") {
     return createElement(TableVariantContext.Provider, { value: variant }, createElement("table", {
@@ -7809,7 +7809,7 @@ function Table({ children, variant = "bordered", className, ...props }) {
   }, createElement("table", { className: "hc-table-element w-full border-collapse" }, children)));
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/enhanceControl.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/enhanceControl.js
 var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
 var FORM_CONTROL_TAGS = /* @__PURE__ */ new Set(["button", "input", "select", "textarea"]);
 function getSingleChild(node) {
@@ -7871,7 +7871,12 @@ function enhanceControl(child, options) {
   return applyAriaProps(child, options);
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/FormGroup/index.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/FormGroup/index.js
+function borderedWrapperClasses(bordered, layoutClasses, extra) {
+  const frame = bordered ? "p-4 border border-separator rounded-md" : "";
+  const base = `hc-form-group ${layoutClasses} ${frame}`.trim();
+  return extra ? `${base} ${extra}` : base;
+}
 function labelClasses(tone, srOnly, inline) {
   const base = "hc-form-group-label text-[18px]";
   const visibility = srOnly ? "sr-only" : "";
@@ -7882,22 +7887,22 @@ function labelClasses(tone, srOnly, inline) {
   const color = tone === "muted" ? "text-muted" : "font-medium text-text";
   return `${base} ${color} ${visibility}`.trim();
 }
-function FormGroup({ label, children, htmlFor, description, error, errorId, descriptionId, layout = "stacked", labelTone = "default", srOnly = false, className, labelClassName, ...props }) {
+function FormGroup({ label, children, htmlFor, description, error, errorId, descriptionId, layout = "stacked", labelTone = "default", srOnly = false, className, labelClassName, bordered = true, ...props }) {
   const generatedId = useId();
   const controlId = htmlFor ?? generatedId;
   const extra = className ?? "";
   if (layout === "associated") {
-    const associatedClasses = labelClassName ? `hc-form-group ${labelClassName}` : "hc-form-group text-[16px] text-text";
+    const associatedClasses = labelClassName ? `hc-form-group ${labelClassName}` : "hc-form-group text-text";
     return jsx("label", { htmlFor, className: associatedClasses, children: label });
   }
   if (layout === "checkboxAdjacent") {
     const wrapperClasses2 = extra ? `hc-form-group flex items-start gap-2 ${extra}` : "hc-form-group flex items-start gap-2";
-    const adjacentLabelClasses = labelClassName ? `hc-form-group-label ${labelClassName}` : "hc-form-group-label min-w-0 flex-1 text-[16px] text-text";
+    const adjacentLabelClasses = labelClassName ? `hc-form-group-label ${labelClassName}` : "hc-form-group-label min-w-0 flex-1 text-text";
     const linkedChildren = enhanceControl(children, { id: controlId });
     return jsxs("div", { ...props, className: wrapperClasses2, children: [linkedChildren, jsx("label", { htmlFor: controlId, className: adjacentLabelClasses, children: label })] });
   }
   if (layout === "radio") {
-    const wrapperClasses2 = extra ? `hc-form-group inline-flex cursor-pointer items-center gap-1.5 text-[16px] text-text app-no-drag ${extra}` : "hc-form-group inline-flex cursor-pointer items-center gap-1.5 text-[16px] text-text app-no-drag";
+    const wrapperClasses2 = extra ? `hc-form-group inline-flex cursor-pointer items-center gap-1.5 text-text app-no-drag ${extra}` : "hc-form-group inline-flex cursor-pointer items-center gap-1.5 text-text app-no-drag";
     const linkedChildren = enhanceControl(children, { id: controlId });
     return jsxs("label", { htmlFor: controlId, className: wrapperClasses2, children: [linkedChildren, jsx("span", { className: "hc-form-group-label", children: label })] });
   }
@@ -7911,11 +7916,11 @@ function FormGroup({ label, children, htmlFor, description, error, errorId, desc
       id: controlId,
       invalid: resolvedErrorId2 != null
     });
-    const wrapperClasses2 = extra ? `hc-form-group flex flex-col gap-1 p-4 border border-separator rounded-md ${extra}` : "hc-form-group flex flex-col gap-1 p-4 border border-separator rounded-md";
+    const wrapperClasses2 = borderedWrapperClasses(bordered, "flex flex-col gap-1", extra);
     return jsxs("div", { ...props, className: wrapperClasses2, children: [jsxs("label", { htmlFor: controlId, className: "hc-form-group-label flex flex-col gap-1", children: [jsxs("span", { className: "hc-form-group-label-row flex items-center gap-2", children: [linkedChildren, jsx("span", { className: labelClasses(labelTone, srOnly, false), children: label })] }), resolvedDescriptionId2 ? jsx("p", { id: resolvedDescriptionId2, className: "hc-form-group-description m-0 pl-[26px] text-[14px] text-muted", children: description }) : null] }), resolvedErrorId2 ? jsx(FieldError, { id: resolvedErrorId2, spacing: "field", children: error }) : null] });
   }
   if (layout === "inline") {
-    const wrapperClasses2 = extra ? `hc-form-group flex min-w-0 flex-1 items-center gap-2 p-4 border border-separator rounded-md ${extra}` : "hc-form-group flex min-w-0 flex-1 items-center gap-2 p-4 border border-separator rounded-md";
+    const wrapperClasses2 = borderedWrapperClasses(bordered, "flex min-w-0 flex-1 items-center gap-2", extra);
     const linkedChildren = enhanceControl(children, { id: controlId });
     return jsxs("label", { htmlFor: controlId, className: wrapperClasses2, children: [jsx("span", { className: labelClasses(labelTone, srOnly, true), children: label }), linkedChildren] });
   }
@@ -7928,16 +7933,16 @@ function FormGroup({ label, children, htmlFor, description, error, errorId, desc
     invalid: resolvedErrorId != null,
     id: htmlFor
   });
-  const wrapperClasses = extra ? `hc-form-group flex flex-col gap-1 p-4 text-[16px] border border-separator rounded-md ${extra}` : "hc-form-group flex flex-col gap-1 p-4 text-[16px] border border-separator rounded-md";
+  const wrapperClasses = borderedWrapperClasses(bordered, "flex flex-col gap-1", extra);
   return jsxs("div", { ...props, className: wrapperClasses, children: [jsxs("label", { htmlFor, className: "hc-form-group-label flex flex-col gap-1", children: [jsx("span", { className: labelClasses(labelTone, srOnly, false), children: label }), resolvedDescriptionId ? jsx("p", { id: resolvedDescriptionId, className: "hc-form-group-description m-0 text-[14px] text-muted", children: description }) : null, control] }), resolvedErrorId ? jsx(FieldError, { id: resolvedErrorId, spacing: "field", children: error }) : null] });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/StatusMessage/index.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/StatusMessage/index.js
 function StatusMessage({ children, live = true, className, ...props }) {
   return jsx("p", { ...props, className: cn("hc-status-message text-[14px] text-muted", className), role: live ? "status" : void 0, "aria-live": live ? "polite" : void 0, children });
 }
 
-// node_modules/.pnpm/@harborclient+sdk@1.0.67_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_b4589862d12fc31a8eee982a4a2cfa53/node_modules/@harborclient/sdk/dist/components/VariableTable/index.js
+// node_modules/.pnpm/@harborclient+sdk@1.1.29_@babel+runtime@8.0.0_@codemirror+search@6.7.1_@codemirror+them_3a1734a8af0e577e0024ac9a7a553b79/node_modules/@harborclient/sdk/dist/components/VariableTable/index.js
 import { useEffect as useEffect2, useRef as useRef2 } from "react";
 var emptyVariable = () => ({ key: "", value: "", defaultValue: "", share: false });
 function VariableTable({ variables, onChange: onChange2, description, focusKey, className, ...props }) {
@@ -7983,7 +7988,7 @@ function VariableTable({ variables, onChange: onChange2, description, focusKey, 
       valueInputRefs.current.set(index, element);
     else
       valueInputRefs.current.delete(index);
-  }, type: "text", className: "w-full", value: variable.value, placeholder: "value", "aria-label": `Value, row ${index + 1}`, onChange: (e2) => updateVariable(index, { value: e2.target.value }) }) }), jsx(TableCell, { children: jsx(Input, { type: "text", className: "w-full", value: variable.defaultValue, placeholder: "default", "aria-label": `Default, row ${index + 1}`, onChange: (e2) => updateVariable(index, { defaultValue: e2.target.value }) }) }), jsx(TableCell, { className: "w-14 text-center", children: jsx(Checkbox, { checked: variable.share, onChange: (e2) => updateVariable(index, { share: e2.target.checked }), "aria-label": `Include value in export, row ${index + 1}`, title: "Include value in export" }) }), jsx(TableCell, { className: "w-7 p-0 text-center", children: jsx(Button, { type: "button", variant: "iconDanger", onClick: () => removeVariable(index), title: "Remove", "aria-label": `Remove row ${index + 1}`, children: jsx(FaIcon, { icon: faXmark, className: "h-3.5 w-3.5" }) }) })] }, index)) })] }), jsxs(Button, { type: "button", variant: "toolbar", className: "hc-variable-table-add inline-flex items-center gap-1 self-start", onClick: addVariable, children: [jsx(FaIcon, { icon: faPlus, className: "h-3 w-3" }), "Add variable"] })] })] });
+  }, type: "text", className: "w-full", value: variable.value, placeholder: "value", "aria-label": `Value, row ${index + 1}`, onChange: (e2) => updateVariable(index, { value: e2.target.value }) }) }), jsx(TableCell, { children: jsx(Input, { type: "text", className: "w-full", value: variable.defaultValue, placeholder: "default", "aria-label": `Default, row ${index + 1}`, onChange: (e2) => updateVariable(index, { defaultValue: e2.target.value }) }) }), jsx(TableCell, { className: "w-14 text-center", children: jsx(Checkbox, { checked: variable.share, onChange: (e2) => updateVariable(index, { share: e2.target.checked }), "aria-label": `Include value in export, row ${index + 1}`, title: "Include value in export" }) }), jsx(TableCell, { className: "w-7 text-center", children: jsx(Button, { type: "button", variant: "iconDanger", onClick: () => removeVariable(index), title: "Remove", "aria-label": `Remove row ${index + 1}`, children: jsx(FaIcon, { icon: faXmark, className: "h-3.5 w-3.5" }) }) })] }, index)) })] }), jsxs(Button, { type: "button", variant: "toolbar", className: "hc-variable-table-add inline-flex items-center gap-1 self-start", onClick: addVariable, children: [jsx(FaIcon, { icon: faPlus, className: "h-3 w-3" }), "Add variable"] })] })] });
 }
 
 // src/storage/defaults.ts
@@ -8322,31 +8327,29 @@ function activate(hc) {
   function ImportEnvViewHost() {
     return /* @__PURE__ */ jsx(ImportEnvView, { hc });
   }
-  hc.subscriptions.push(
-    hc.ui.registerSettingsSection({
-      id: "defaults",
-      title: "Dotenv Sync",
-      Component: SettingsPanelHost
-    }),
-    hc.ui.registerMainView({
-      id: "import",
-      title: "Import .env",
-      Component: ImportEnvViewHost
-    }),
-    hc.ui.registerMenuItem({
-      menu: "file",
-      command: "import",
-      label: "Import .env",
-      group: "import"
-    }),
-    hc.commands.register("import", () => {
-      void hc.commands.execute(
-        "harborclient:openMainView",
-        hc.pluginId,
-        "import"
-      );
-    })
-  );
+  hc.ui.registerSettingsSection({
+    id: "defaults",
+    title: "Dotenv Sync",
+    Component: SettingsPanelHost
+  });
+  hc.ui.registerMainView({
+    id: "import",
+    title: "Import .env",
+    Component: ImportEnvViewHost
+  });
+  hc.ui.registerMenuItem({
+    menu: "file",
+    command: "import",
+    label: "Import .env",
+    group: "import"
+  });
+  hc.commands.register("import", () => {
+    void hc.commands.execute(
+      "harborclient:openMainView",
+      hc.pluginId,
+      "import"
+    );
+  });
 }
 function deactivate() {
 }
